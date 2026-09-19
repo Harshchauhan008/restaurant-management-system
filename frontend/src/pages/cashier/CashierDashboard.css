@@ -1,0 +1,2660 @@
+/* =========================================================
+   PAGE
+========================================================= */
+
+.cashier-page {
+    min-height: 100vh;
+    padding: 32px 34px 50px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #241812 0%,
+            #1d1511 100%
+        );
+
+    color: #eadbd0;
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+.cashier-page * {
+    box-sizing: border-box;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.cashier-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 24px;
+    margin-bottom: 25px;
+}
+
+.cashier-eyebrow {
+    margin-bottom: 6px;
+
+    color: #b58c72;
+
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+}
+
+.cashier-header-left h1 {
+    margin: 0;
+
+    color: #f1e1d6;
+
+    font-family: Georgia, serif;
+
+    font-size: 34px;
+    line-height: 1.15;
+}
+
+.cashier-header-left p {
+    margin: 9px 0 0;
+
+    max-width: 650px;
+
+    color: #aa9588;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.cashier-header-right {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    flex-shrink: 0;
+}
+
+/* =========================================================
+   LIVE
+========================================================= */
+
+.cashier-live-badge {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    height: 38px;
+    padding: 0 12px;
+
+    border: 1px solid #614c40;
+    border-radius: 9px;
+
+    background: #2a1d17;
+
+    color: #d5beb0;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.cashier-live-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #78a479;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(120, 164, 121, 0.12);
+}
+
+/* =========================================================
+   HEADER BUTTONS
+========================================================= */
+
+.cashier-refresh-button,
+.cashier-logout-button {
+    height: 38px;
+    padding: 0 14px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.cashier-refresh-button {
+    border: 1px solid #c7b4a6;
+
+    background: #eee2d7;
+
+    color: #483126;
+}
+
+.cashier-refresh-button:hover {
+    background: #f5e9df;
+}
+
+.cashier-refresh-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.cashier-logout-button {
+    border: 1px solid #604a3d;
+
+    background: transparent;
+
+    color: #d0b8aa;
+}
+
+.cashier-logout-button:hover {
+    background: #30221b;
+}
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.cashier-alert {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 14px;
+    padding: 11px 14px;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+}
+
+.cashier-alert-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 21px;
+    height: 21px;
+
+    flex: 0 0 21px;
+
+    border-radius: 50%;
+
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.cashier-success {
+    border: 1px solid #4d694f;
+
+    background: #253628;
+
+    color: #d9e9da;
+}
+
+.cashier-success .cashier-alert-icon {
+    background: #4d694f;
+}
+
+.cashier-error {
+    border: 1px solid #75483e;
+
+    background: #39221d;
+
+    color: #f0d0c5;
+}
+
+.cashier-error .cashier-alert-icon {
+    background: #75483e;
+}
+
+.cashier-error button {
+    margin-left: auto;
+
+    border: none;
+
+    background: transparent;
+
+    color: #e7beb1;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.cashier-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 13px;
+
+    margin-bottom: 24px;
+}
+
+.cashier-summary-card {
+    padding: 17px;
+
+    border: 1px solid #574439;
+    border-radius: 12px;
+
+    background: #2a1d17;
+}
+
+.cashier-summary-card span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #9f887b;
+
+    font-size: 10px;
+}
+
+.cashier-summary-card strong {
+    display: block;
+
+    color: #efddd1;
+
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.cashier-summary-card small {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #78655b;
+
+    font-size: 10px;
+}
+
+.cashier-summary-highlight {
+    border-color: #76553f;
+
+    background: #332117;
+}
+
+/* =========================================================
+   MAIN TABS
+========================================================= */
+
+.cashier-main-tabs {
+    display: flex;
+    align-items: center;
+
+    width: max-content;
+    max-width: 100%;
+
+    gap: 7px;
+
+    margin-bottom: 13px;
+    padding: 5px;
+
+    border: 1px solid #9b8678;
+    border-radius: 10px;
+
+    background: #e9ded3;
+}
+
+.cashier-main-tab {
+    min-width: 135px;
+
+    height: 38px;
+    padding: 0 17px;
+
+    border: 1px solid transparent;
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: #6b5549;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+.cashier-main-tab:hover {
+    background: #dfd0c4;
+}
+
+.cashier-main-tab-active {
+    background: #5b3b2b;
+
+    color: #fff8f2;
+}
+
+/* =========================================================
+   SUB TABS
+========================================================= */
+
+.cashier-sub-tabs {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 21px;
+    padding-bottom: 8px;
+
+    border-bottom: 1px solid #45342c;
+}
+
+.cashier-sub-tab {
+    height: 34px;
+    padding: 0 13px;
+
+    border: 1px solid #59463b;
+    border-radius: 7px;
+
+    background: #251914;
+
+    color: #a88f81;
+
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.cashier-sub-tab:hover {
+    background: #30221b;
+}
+
+.cashier-sub-tab-active {
+    border-color: #c4ad9e;
+
+    background: #eadfd5;
+
+    color: #4d3326;
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.cashier-section {
+    min-width: 0;
+}
+
+.cashier-section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 17px;
+}
+
+.cashier-section-header h2 {
+    margin: 0;
+
+    color: #f0dfd3;
+
+    font-family: Georgia, serif;
+
+    font-size: 21px;
+}
+
+.cashier-section-header p {
+    margin: 5px 0 0;
+
+    color: #968176;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.cashier-count-badge {
+    flex-shrink: 0;
+
+    padding: 7px 10px;
+
+    border: 1px solid #57453a;
+    border-radius: 7px;
+
+    background: #2a1d17;
+
+    color: #c6b0a2;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+/* =========================================================
+   RESERVATION PERIOD TOOLBAR
+========================================================= */
+
+.cashier-reservation-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 16px;
+    padding: 10px;
+
+    border: 1px solid #514037;
+    border-radius: 10px;
+
+    background: #261a15;
+}
+
+.cashier-reservation-view-switch {
+    display: flex;
+    align-items: center;
+
+    gap: 4px;
+
+    padding: 4px;
+
+    border: 1px solid #604a3d;
+    border-radius: 8px;
+
+    background: #1f1511;
+}
+
+.cashier-reservation-view-button {
+    height: 34px;
+
+    padding: 0 15px;
+
+    border: 1px solid transparent;
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: #9f887a;
+
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.cashier-reservation-view-button:hover {
+    background: #34241c;
+
+    color: #d9c6b9;
+}
+
+.cashier-reservation-view-button-active {
+    background: #eadfd5;
+
+    color: #4e3428;
+}
+
+.cashier-reservation-period-title {
+    color: #d6c1b4;
+
+    font-size: 11px;
+    font-weight: 900;
+}
+
+/* =========================================================
+   RESERVATION DATE NAVIGATION
+========================================================= */
+
+.cashier-reservation-date-navigation {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 15px;
+}
+
+.cashier-date-nav-button {
+    width: 35px;
+    height: 35px;
+
+    border: 1px solid #624b3e;
+    border-radius: 7px;
+
+    background: #281c17;
+
+    color: #d2bdaf;
+
+    font-size: 15px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.cashier-date-nav-button:hover {
+    background: #34241d;
+}
+
+.cashier-today-button {
+    height: 35px;
+
+    padding: 0 12px;
+
+    border: 1px solid #806554;
+    border-radius: 7px;
+
+    background: #eadfd5;
+
+    color: #51372a;
+
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.cashier-today-button:hover {
+    background: #f2e7df;
+}
+
+.cashier-current-period {
+    min-width: 190px;
+
+    padding: 9px 13px;
+
+    border: 1px solid #4f3c32;
+    border-radius: 7px;
+
+    background: #2a1d17;
+
+    color: #d9c5b7;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    text-align: center;
+}
+
+/* =========================================================
+   RESERVATION COUNT LINE
+========================================================= */
+
+.cashier-reservation-count {
+    margin: 4px 0 14px;
+
+    color: #8f7769;
+
+    font-size: 11px;
+}
+
+.cashier-reservation-count strong {
+    color: #d7bdac;
+}
+
+/* =========================================================
+   WEEK STRIP VIEW
+========================================================= */
+
+.cashier-week-strip {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, minmax(0, 1fr));
+
+    gap: 8px;
+
+    margin-bottom: 22px;
+}
+
+.cashier-week-day {
+    min-height: 82px;
+
+    padding: 11px 8px;
+
+    border: 1px solid #4c362a;
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #281a15,
+            #201511
+        );
+
+    color: #bda596;
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+.cashier-week-day:hover {
+    border-color: #81563d;
+
+    background: #2b1c16;
+}
+
+.cashier-week-day.active {
+    border-color: #9b6647;
+
+    background:
+        linear-gradient(
+            145deg,
+            #68432f,
+            #452c20
+        );
+
+    color: #fff;
+
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+}
+
+.cashier-week-day-label {
+    font-size: 9px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cashier-week-day-number {
+    margin: 5px 0;
+
+    font-size: 21px;
+    font-weight: 900;
+}
+
+.cashier-week-day-count {
+    color: #8e7567;
+
+    font-size: 9px;
+}
+
+.cashier-week-day.active .cashier-week-day-count {
+    color: #dbc6b8;
+}
+
+/* =========================================================
+   MONTH CALENDAR VIEW
+========================================================= */
+
+.cashier-month-calendar {
+    overflow: hidden;
+
+    margin-bottom: 22px;
+
+    border: 1px solid #463229;
+    border-radius: 13px;
+
+    background: #1e1410;
+}
+
+.cashier-month-weekdays {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    border-bottom: 1px solid #423026;
+}
+
+.cashier-month-weekday {
+    padding: 11px 6px;
+
+    background: #241712;
+
+    color: #80695d;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+.cashier-month-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+}
+
+.cashier-month-empty {
+    min-height: 88px;
+
+    border-right: 1px solid #35261f;
+    border-bottom: 1px solid #35261f;
+}
+
+.cashier-month-day {
+    position: relative;
+
+    min-height: 88px;
+
+    padding: 9px;
+
+    border: none;
+    border-right: 1px solid #35261f;
+    border-bottom: 1px solid #35261f;
+
+    background: #1f1511;
+
+    color: #bca395;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.cashier-month-day:hover {
+    background: #291a15;
+}
+
+.cashier-month-day.selected {
+    background: #332119;
+
+    box-shadow: inset 0 0 0 2px #8d5b40;
+}
+
+.cashier-month-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+
+    color: #cbb4a5;
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.cashier-month-day.selected .cashier-month-number {
+    background: #7a4c35;
+
+    color: white;
+}
+
+.cashier-month-booking-count {
+    margin-top: 8px;
+
+    color: #9f8474;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.cashier-month-dots {
+    display: flex;
+
+    gap: 3px;
+
+    margin-top: 7px;
+}
+
+.cashier-calendar-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+}
+
+.cashier-calendar-dot.pending {
+    background: #c9a36a;
+}
+
+.cashier-calendar-dot.confirmed {
+    background: #8298b0;
+}
+
+.cashier-calendar-dot.seated {
+    background: #a084aa;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.cashier-state,
+.cashier-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 280px;
+
+    flex-direction: column;
+
+    padding: 35px;
+
+    border: 1px dashed #564139;
+    border-radius: 13px;
+
+    background: #211713;
+
+    text-align: center;
+}
+
+.cashier-spinner {
+    width: 36px;
+    height: 36px;
+
+    margin-bottom: 12px;
+
+    border: 3px solid #44342c;
+
+    border-top-color: #ae7655;
+
+    border-radius: 50%;
+
+    animation:
+        cashier-spin
+        0.8s
+        linear
+        infinite;
+}
+
+@keyframes cashier-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.cashier-state p,
+.cashier-empty p {
+    margin: 0;
+
+    color: #8d796d;
+
+    font-size: 12px;
+}
+
+.cashier-empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 56px;
+    height: 56px;
+
+    margin-bottom: 14px;
+
+    border-radius: 50%;
+
+    background: #3e5742;
+
+    color: #e2f0e3;
+
+    font-size: 21px;
+    font-weight: 900;
+}
+
+.cashier-empty h3 {
+    margin: 0 0 6px;
+
+    color: #eadbd0;
+
+    font-family: Georgia, serif;
+
+    font-size: 19px;
+}
+
+/* =========================================================
+   GENERIC DATA GRID
+========================================================= */
+
+.cashier-data-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(340px, 1fr)
+        );
+
+    gap: 15px;
+}
+
+.cashier-data-card {
+    padding: 17px;
+
+    border: 1px solid #c9b5a6;
+    border-radius: 12px;
+
+    background: #eee3d9;
+
+    color: #36271e;
+
+    box-shadow:
+        0 8px 20px
+        rgba(0, 0, 0, 0.15);
+}
+
+.cashier-data-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 15px;
+}
+
+.cashier-card-number {
+    color: #412c21;
+
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.cashier-card-muted {
+    margin-top: 4px;
+
+    color: #897368;
+
+    font-size: 11px;
+}
+
+/* =========================================================
+   RESERVATION CARD
+========================================================= */
+
+.cashier-reservation-card {
+    position: relative;
+
+    overflow: hidden;
+
+    border: 1px solid #c9b5a6;
+    border-radius: 13px;
+
+    background: #eee3d9;
+
+    color: #36271e;
+
+    box-shadow:
+        0 8px 20px
+        rgba(0, 0, 0, 0.15);
+}
+
+.cashier-reservation-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 4px;
+    height: 100%;
+
+    background: #98715a;
+}
+
+.cashier-reservation-card.pending::before {
+    background: #b18a4b;
+}
+
+.cashier-reservation-card.confirmed::before {
+    background: #66819b;
+}
+
+.cashier-reservation-card.seated::before {
+    background: #80628d;
+}
+
+.cashier-reservation-card.completed::before {
+    background: #648064;
+}
+
+.cashier-reservation-card.cancelled::before {
+    background: #98645b;
+}
+
+.cashier-reservation-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 16px 17px 13px;
+
+    border-bottom: 1px solid #d5c3b6;
+
+    background: #f3e9e1;
+}
+
+.cashier-reservation-number {
+    color: #3e2a20;
+
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.cashier-reservation-customer {
+    margin-top: 4px;
+
+    color: #7e685c;
+
+    font-size: 10px;
+}
+
+.cashier-reservation-main {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    border-bottom: 1px solid #d8c6b8;
+}
+
+.cashier-reservation-info {
+    min-width: 0;
+
+    padding: 12px;
+
+    border-right: 1px solid #d8c6b8;
+    border-bottom: 1px solid #d8c6b8;
+}
+
+.cashier-reservation-info:nth-child(2n) {
+    border-right: none;
+}
+
+.cashier-reservation-info:nth-last-child(-n + 2) {
+    border-bottom: none;
+}
+
+.cashier-reservation-info span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #8a7367;
+
+    font-size: 8px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+.cashier-reservation-info strong {
+    display: block;
+
+    overflow: hidden;
+
+    color: #493228;
+
+    font-size: 11px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cashier-reservation-time {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin: 13px 16px 0;
+
+    padding: 10px 11px;
+
+    border: 1px solid #cdb9ab;
+    border-radius: 8px;
+
+    background: #e5d9cf;
+
+    color: #533a2c;
+}
+
+.cashier-reservation-time-icon {
+    font-size: 14px;
+}
+
+.cashier-reservation-time strong {
+    display: block;
+
+    color: #463026;
+
+    font-size: 11px;
+}
+
+.cashier-reservation-time span {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #806b5f;
+
+    font-size: 9px;
+}
+
+.cashier-reservation-actions {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    padding: 14px 16px 16px;
+}
+
+.cashier-reservation-actions button {
+    min-height: 34px;
+
+    padding: 0 11px;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.cashier-reservation-confirm {
+    border: none;
+
+    background: #536f57;
+
+    color: #fff;
+}
+
+.cashier-reservation-confirm:hover {
+    background: #435d47;
+}
+
+.cashier-reservation-cancel {
+    border: 1px solid #a26f62;
+
+    background: #f0ddd7;
+
+    color: #713f34;
+}
+
+.cashier-reservation-cancel:hover {
+    background: #e7d0c9;
+}
+
+.cashier-reservation-seat {
+    border: none;
+
+    background: #70547d;
+
+    color: #fff;
+}
+
+.cashier-reservation-seat:hover {
+    background: #60466c;
+}
+
+.cashier-reservation-complete {
+    border: 1px solid #708875;
+
+    background: #dce7dc;
+
+    color: #3f5943;
+}
+
+.cashier-reservation-complete:hover {
+    background: #cfddcf;
+}
+
+.cashier-reservation-actions button:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.cashier-detail-list {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    border-top: 1px solid #d8c7ba;
+    border-left: 1px solid #d8c7ba;
+}
+
+.cashier-detail-list > div {
+    min-width: 0;
+
+    padding: 10px;
+
+    border-right: 1px solid #d8c7ba;
+    border-bottom: 1px solid #d8c7ba;
+}
+
+.cashier-detail-list span,
+.cashier-table-info span,
+.cashier-order-summary-grid span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #8a7367;
+
+    font-size: 9px;
+
+    text-transform: uppercase;
+}
+
+.cashier-detail-list strong,
+.cashier-table-info strong,
+.cashier-order-summary-grid strong {
+    display: block;
+
+    overflow: hidden;
+
+    color: #493228;
+
+    font-size: 11px;
+
+    text-overflow: ellipsis;
+}
+
+/* =========================================================
+   CARD ACTIONS
+========================================================= */
+
+.cashier-card-actions {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 15px;
+}
+
+.cashier-primary-small,
+.cashier-secondary-small,
+.cashier-danger-small {
+    min-height: 34px;
+
+    padding: 0 11px;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.cashier-primary-small {
+    border: none;
+
+    background: #81502f;
+
+    color: #fff;
+}
+
+.cashier-secondary-small {
+    border: 1px solid #9c8475;
+
+    background: #eee2d8;
+
+    color: #593d2e;
+}
+
+.cashier-danger-small {
+    border: 1px solid #a26f62;
+
+    background: #f0ddd7;
+
+    color: #713f34;
+}
+
+.cashier-primary-small:hover {
+    background: #6a4127;
+}
+
+.cashier-secondary-small:hover {
+    background: #e2d5ca;
+}
+
+.cashier-danger-small:hover {
+    background: #e7d0c9;
+}
+
+.cashier-primary-small:disabled,
+.cashier-secondary-small:disabled,
+.cashier-danger-small:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   TABLE SUMMARY
+========================================================= */
+
+.cashier-table-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+}
+
+.cashier-table-summary > div {
+    padding: 13px;
+
+    border: 1px solid #57443a;
+    border-radius: 9px;
+
+    background: #291c17;
+}
+
+.cashier-table-summary span {
+    display: block;
+
+    color: #947d71;
+
+    font-size: 9px;
+}
+
+.cashier-table-summary strong {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #ead8cd;
+
+    font-size: 19px;
+}
+
+/* =========================================================
+   TABLE GRID
+========================================================= */
+
+.cashier-table-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(230px, 1fr)
+        );
+
+    gap: 14px;
+}
+
+.cashier-table-card {
+    padding: 16px;
+
+    border: 1px solid #bdab9e;
+    border-radius: 12px;
+
+    background: #eee3d9;
+
+    color: #37271e;
+}
+
+.cashier-table-card.reserved {
+    border-color: #b99b72;
+}
+
+.cashier-table-card.occupied {
+    border-color: #a67b70;
+}
+
+.cashier-table-card.available {
+    border-color: #9db39f;
+}
+
+.cashier-table-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 15px;
+}
+
+.cashier-big-table-number {
+    color: #432d20;
+
+    font-family: Georgia, serif;
+
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.cashier-table-info {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    border-top: 1px solid #d4c2b5;
+}
+
+.cashier-table-info > div {
+    padding: 10px 8px;
+
+    border-bottom: 1px solid #d4c2b5;
+}
+
+.cashier-table-info > div:last-child {
+    grid-column: 1 / -1;
+}
+
+.cashier-table-actions {
+    display: flex;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 14px;
+}
+
+.cashier-table-occupied-note {
+    color: #774a40;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.cashier-table-note {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 16px;
+    padding: 11px 13px;
+
+    border: 1px dashed #725649;
+    border-radius: 8px;
+
+    background: #2a1d17;
+
+    color: #a89184;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+.cashier-table-note strong {
+    color: #d0b9aa;
+}
+
+/* =========================================================
+   ORDER GRID
+========================================================= */
+
+.cashier-order-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(350px, 1fr)
+        );
+
+    gap: 16px;
+}
+
+.cashier-order-card {
+    display: flex;
+
+    min-width: 0;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border: 1px solid #c9b5a6;
+    border-radius: 13px;
+
+    background: #eee3d9;
+
+    color: #35261d;
+
+    box-shadow:
+        0 9px 22px
+        rgba(0, 0, 0, 0.16);
+}
+
+.cashier-order-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 16px 17px;
+
+    border-bottom: 1px solid #d5c3b6;
+
+    background: #f3e9e1;
+}
+
+.cashier-order-number {
+    color: #3d2a20;
+
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.cashier-order-time {
+    margin-top: 4px;
+
+    color: #8b7468;
+
+    font-size: 10px;
+}
+
+.cashier-order-status {
+    padding: 5px 8px;
+
+    border-radius: 6px;
+
+    background: #3f5943;
+
+    color: white;
+
+    font-size: 9px;
+    font-weight: 900;
+}
+
+.cashier-order-info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    border-bottom: 1px solid #d8c6b8;
+}
+
+.cashier-order-info {
+    padding: 11px 12px;
+
+    border-right: 1px solid #d8c6b8;
+}
+
+.cashier-order-info:last-child {
+    border-right: none;
+}
+
+.cashier-order-info span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #8b7467;
+
+    font-size: 9px;
+}
+
+.cashier-order-info strong {
+    color: #493228;
+
+    font-size: 11px;
+}
+
+/* =========================================================
+   ITEMS
+========================================================= */
+
+.cashier-items {
+    padding: 15px 17px;
+}
+
+.cashier-items-title,
+.cashier-modal-section-title {
+    margin-bottom: 8px;
+
+    color: #755e51;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+}
+
+.cashier-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 9px 0;
+
+    border-bottom: 1px solid #ddcdc1;
+}
+
+.cashier-item-row:last-child {
+    border-bottom: none;
+}
+
+.cashier-item-row strong {
+    color: #493228;
+
+    font-size: 11px;
+}
+
+.cashier-item-row span {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #8b7569;
+
+    font-size: 9px;
+}
+
+/* =========================================================
+   ORDER TOTAL
+========================================================= */
+
+.cashier-order-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px 17px;
+
+    border-top: 1px solid #d2c0b2;
+
+    background: #e7dbd1;
+}
+
+.cashier-order-total span {
+    color: #80695d;
+
+    font-size: 10px;
+}
+
+.cashier-order-total strong {
+    color: #3e2a20;
+
+    font-size: 17px;
+}
+
+/* =========================================================
+   EXISTING BILL
+========================================================= */
+
+.cashier-existing-bill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin: 13px 17px 0;
+
+    padding: 10px 11px;
+
+    border: 1px solid #bca99c;
+    border-radius: 8px;
+
+    background: #e5d7cd;
+}
+
+.cashier-existing-bill span {
+    display: block;
+
+    font-size: 9px;
+}
+
+.cashier-existing-bill strong {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #493228;
+
+    font-size: 11px;
+}
+
+/* =========================================================
+   ORDER ACTIONS
+========================================================= */
+
+.cashier-order-actions {
+    padding: 14px 17px 17px;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.cashier-primary-button,
+.cashier-secondary-button {
+    min-height: 41px;
+
+    padding: 0 15px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.cashier-primary-button {
+    width: 100%;
+
+    border: none;
+
+    background: #81502f;
+
+    color: white;
+}
+
+.cashier-primary-button:hover {
+    background: #6c4228;
+}
+
+.cashier-primary-button:disabled,
+.cashier-secondary-button:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+}
+
+.cashier-secondary-button {
+    border: 1px solid #9d8576;
+
+    background: #eee2d8;
+
+    color: #51382a;
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.cashier-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 66px;
+
+    padding: 5px 8px;
+
+    border-radius: 6px;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+}
+
+.cashier-status.pending {
+    background: #e4cfaf;
+    color: #664921;
+}
+
+.cashier-status.confirmed {
+    background: #d2dbe7;
+    color: #41556b;
+}
+
+.cashier-status.seated {
+    background: #ddd0e3;
+    color: #593f65;
+}
+
+.cashier-status.completed,
+.cashier-status.paid {
+    background: #ceddce;
+    color: #35503a;
+}
+
+.cashier-status.cancelled {
+    background: #ead0ca;
+    color: #713f34;
+}
+
+.cashier-status.available {
+    background: #ceddce;
+    color: #35503a;
+}
+
+.cashier-status.reserved {
+    background: #e5d2ae;
+    color: #65491e;
+}
+
+.cashier-status.occupied {
+    background: #dfccc5;
+    color: #6b4036;
+}
+
+.cashier-status.generated {
+    background: #e4d0ae;
+    color: #624820;
+}
+
+.cashier-status.printed {
+    background: #d9cee2;
+    color: #573e67;
+}
+
+.cashier-status.served {
+    background: #d1ddcf;
+    color: #38503b;
+}
+
+.cashier-status.ready {
+    background: #d2dbe7;
+    color: #41556b;
+}
+
+.cashier-status.preparing {
+    background: #ddd0e3;
+    color: #593f65;
+}
+
+.cashier-status.placed {
+    background: #e4cfaf;
+    color: #664921;
+}
+
+/* =========================================================
+   HISTORY TOOLS
+========================================================= */
+
+.cashier-history-tools {
+    display: grid;
+
+    grid-template-columns:
+        minmax(250px, 1fr)
+        180px;
+
+    gap: 10px;
+
+    margin-bottom: 15px;
+}
+
+.cashier-search-box {
+    display: flex;
+    align-items: center;
+
+    height: 41px;
+
+    gap: 8px;
+
+    padding: 0 11px;
+
+    border: 1px solid #604b3f;
+    border-radius: 8px;
+
+    background: #281c17;
+}
+
+.cashier-search-box span {
+    color: #9a8276;
+
+    font-size: 12px;
+}
+
+.cashier-search-box input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #eadbd0;
+
+    font-family: inherit;
+
+    font-size: 11px;
+}
+
+.cashier-search-box input::placeholder {
+    color: #756158;
+}
+
+.cashier-history-filter {
+    height: 41px;
+
+    padding: 0 10px;
+
+    border: 1px solid #604b3f;
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #281c17;
+
+    color: #d6c1b4;
+
+    font-family: inherit;
+
+    font-size: 11px;
+}
+
+/* =========================================================
+   HISTORY TABLE
+========================================================= */
+
+.cashier-history-table-wrap {
+    overflow-x: auto;
+
+    border: 1px solid #514036;
+    border-radius: 11px;
+
+    background: #251a15;
+}
+
+.cashier-history-table {
+    width: 100%;
+
+    min-width: 850px;
+
+    border-collapse: collapse;
+}
+
+.cashier-history-table th {
+    padding: 12px 13px;
+
+    border-bottom: 1px solid #48372e;
+
+    background: #2b1e18;
+
+    color: #9f897b;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    text-align: left;
+
+    text-transform: uppercase;
+}
+
+.cashier-history-table td {
+    padding: 13px;
+
+    border-bottom: 1px solid #3e3028;
+
+    color: #c3b0a3;
+
+    font-size: 10px;
+}
+
+.cashier-history-table tr:last-child td {
+    border-bottom: none;
+}
+
+.cashier-history-table tbody tr:hover {
+    background: #2b1f19;
+}
+
+.cashier-history-table td strong {
+    color: #e9dad0;
+}
+
+.cashier-view-button {
+    height: 30px;
+
+    padding: 0 10px;
+
+    border: 1px solid #7b6456;
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: #ccb7aa;
+
+    font-family: inherit;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.cashier-view-button:hover {
+    background: #35261f;
+}
+
+/* =========================================================
+   MINI ORDER SUMMARY
+========================================================= */
+
+.cashier-order-summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    margin-top: 14px;
+
+    border-top: 1px solid #d6c5b9;
+    border-left: 1px solid #d6c5b9;
+}
+
+.cashier-order-summary-grid > div {
+    padding: 10px;
+
+    border-right: 1px solid #d6c5b9;
+    border-bottom: 1px solid #d6c5b9;
+}
+
+.cashier-mini-items {
+    margin-top: 12px;
+
+    padding-top: 10px;
+
+    border-top: 1px solid #d5c4b7;
+}
+
+.cashier-mini-items > div {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 5px 0;
+
+    color: #705d51;
+
+    font-size: 10px;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.cashier-modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(10, 7, 5, 0.76);
+
+    backdrop-filter: blur(3px);
+}
+
+.cashier-modal {
+    width: min(
+        650px,
+        100%
+    );
+
+    max-height:
+        calc(100vh - 40px);
+
+    overflow-y: auto;
+
+    border: 1px solid #c3ad9e;
+    border-radius: 15px;
+
+    background: #eee3d9;
+
+    color: #33241b;
+
+    box-shadow:
+        0 25px 80px
+        rgba(0, 0, 0, 0.4);
+}
+
+.cashier-modal-header {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 19px 21px;
+
+    border-bottom: 1px solid #d4c2b5;
+
+    background: #f3e9e1;
+}
+
+.cashier-modal-eyebrow {
+    margin-bottom: 3px;
+
+    color: #947462;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: 0.14em;
+}
+
+.cashier-modal-header h2 {
+    margin: 0;
+
+    color: #3e2b20;
+
+    font-family: Georgia, serif;
+
+    font-size: 23px;
+}
+
+.cashier-modal-header p {
+    margin: 5px 0 0;
+
+    color: #887165;
+
+    font-size: 10px;
+}
+
+.cashier-modal-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+
+    border: 1px solid #bdab9e;
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #60483a;
+
+    font-size: 21px;
+
+    cursor: pointer;
+}
+
+/* =========================================================
+   MODAL META
+========================================================= */
+
+.cashier-modal-meta {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    border-bottom: 1px solid #d8c6b8;
+}
+
+.cashier-modal-meta > div {
+    padding: 13px;
+
+    border-right: 1px solid #d8c6b8;
+}
+
+.cashier-modal-meta > div:last-child {
+    border-right: none;
+}
+
+.cashier-modal-meta span:first-child {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #887165;
+
+    font-size: 8px;
+}
+
+.cashier-modal-meta strong {
+    color: #493228;
+
+    font-size: 11px;
+}
+
+/* =========================================================
+   MODAL ITEMS
+========================================================= */
+
+.cashier-modal-items {
+    padding: 17px 20px;
+}
+
+.cashier-modal-item {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #dccbc0;
+}
+
+.cashier-modal-item:last-child {
+    border-bottom: none;
+}
+
+.cashier-modal-item strong {
+    color: #493228;
+
+    font-size: 11px;
+}
+
+.cashier-modal-item span {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #8a7468;
+
+    font-size: 9px;
+}
+
+/* =========================================================
+   TOTALS
+========================================================= */
+
+.cashier-modal-totals {
+    padding: 14px 20px;
+
+    border-top: 1px solid #d1beb0;
+    border-bottom: 1px solid #d1beb0;
+
+    background: #e7dbd1;
+}
+
+.cashier-modal-totals > div {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 5px 0;
+}
+
+.cashier-modal-totals span {
+    color: #80695d;
+
+    font-size: 10px;
+}
+
+.cashier-modal-totals strong {
+    color: #493228;
+
+    font-size: 10px;
+}
+
+.cashier-modal-grand-total {
+    margin-top: 6px;
+
+    padding-top: 10px !important;
+
+    border-top: 1px solid #cbb6a8;
+}
+
+.cashier-modal-grand-total span {
+    color: #684d3e;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.cashier-modal-grand-total strong {
+    color: #38271e;
+
+    font-size: 19px;
+}
+
+/* =========================================================
+   MODAL ACTIONS
+========================================================= */
+
+.cashier-modal-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 9px;
+
+    padding: 17px 20px;
+}
+
+.cashier-paid-note {
+    display: flex;
+
+    gap: 10px;
+
+    margin:
+        0 20px 20px;
+
+    padding: 11px;
+
+    border: 1px solid #a7bca9;
+    border-radius: 8px;
+
+    background: #e0e9e0;
+}
+
+.cashier-paid-note > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 23px;
+    height: 23px;
+
+    flex: 0 0 23px;
+
+    border-radius: 50%;
+
+    background: #527357;
+
+    color: white;
+
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.cashier-paid-note strong {
+    color: #39513d;
+
+    font-size: 11px;
+}
+
+.cashier-paid-note p {
+    margin: 3px 0 0;
+
+    color: #647166;
+
+    font-size: 9px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+    .cashier-summary {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .cashier-week-strip {
+        overflow-x: auto;
+
+        grid-template-columns:
+            repeat(
+                7,
+                minmax(100px, 1fr)
+            );
+    }
+
+    .cashier-month-grid {
+        min-width: 620px;
+    }
+
+    .cashier-month-calendar {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 820px) {
+    .cashier-page {
+        padding:
+            23px 17px 40px;
+    }
+
+    .cashier-header {
+        flex-direction: column;
+    }
+
+    .cashier-header-right {
+        width: 100%;
+
+        flex-wrap: wrap;
+    }
+
+    .cashier-live-badge {
+        margin-right: auto;
+    }
+
+    .cashier-history-tools {
+        grid-template-columns:
+            1fr;
+    }
+
+    .cashier-reservation-toolbar {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+    .cashier-reservation-view-switch {
+        width: 100%;
+    }
+
+    .cashier-reservation-view-button {
+        flex: 1;
+    }
+
+    .cashier-current-period {
+        width: 100%;
+    }
+}
+
+@media (max-width: 650px) {
+    .cashier-header-left h1 {
+        font-size: 29px;
+    }
+
+    .cashier-summary {
+        grid-template-columns:
+            1fr;
+    }
+
+    .cashier-main-tabs {
+        width: 100%;
+
+        overflow-x: auto;
+    }
+
+    .cashier-main-tab {
+        min-width: 125px;
+
+        flex: 0 0 auto;
+    }
+
+    .cashier-sub-tabs {
+        overflow-x: auto;
+    }
+
+    .cashier-sub-tab {
+        flex-shrink: 0;
+    }
+
+    .cashier-data-grid,
+    .cashier-order-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .cashier-table-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .cashier-table-summary {
+        grid-template-columns:
+            1fr;
+    }
+
+    .cashier-reservation-main {
+        grid-template-columns:
+            1fr;
+    }
+
+    .cashier-reservation-info {
+        border-right: none;
+    }
+
+    .cashier-reservation-info:nth-last-child(-n + 2) {
+        border-bottom: 1px solid #d8c6b8;
+    }
+
+    .cashier-reservation-info:last-child {
+        border-bottom: none;
+    }
+
+    .cashier-reservation-date-navigation {
+        flex-wrap: wrap;
+    }
+
+    .cashier-current-period {
+        order: -1;
+
+        flex: 1 1 100%;
+    }
+
+    .cashier-modal-meta {
+        grid-template-columns:
+            1fr;
+    }
+
+    .cashier-modal-meta > div {
+        border-right: none;
+
+        border-bottom:
+            1px solid #d8c6b8;
+    }
+
+    .cashier-modal-meta > div:last-child {
+        border-bottom: none;
+    }
+
+    .cashier-modal-actions {
+        flex-direction: column;
+    }
+
+    .cashier-modal-actions button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .cashier-page {
+        padding:
+            19px 12px 30px;
+    }
+
+    .cashier-header-right {
+        flex-direction: column;
+    }
+
+    .cashier-live-badge {
+        width: 100%;
+
+        margin-right: 0;
+    }
+
+    .cashier-refresh-button,
+    .cashier-logout-button {
+        width: 100%;
+    }
+
+    .cashier-table-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .cashier-detail-list {
+        grid-template-columns:
+            1fr;
+    }
+
+    .cashier-order-info-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .cashier-order-info:last-child {
+        grid-column: 1 / -1;
+
+        border-top:
+            1px solid #d8c6b8;
+
+        border-right: none;
+    }
+
+    .cashier-reservation-view-switch {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .cashier-reservation-view-button {
+        padding: 0 7px;
+    }
+
+    .cashier-reservation-actions {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .cashier-reservation-actions button {
+        width: 100%;
+    }
+
+    .cashier-week-strip {
+        grid-template-columns:
+            repeat(7, minmax(72px, 1fr));
+    }
+}
