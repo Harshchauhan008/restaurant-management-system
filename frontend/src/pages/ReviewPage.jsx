@@ -15,8 +15,6 @@ function ReviewPage() {
 
   const fileInputRef = useRef(null);
 
-  const params = new URLSearchParams(window.location.search);
-  const reviewToken = params.get("token");
 
   // =====================================================
   // PHOTO SELECTION
@@ -48,6 +46,7 @@ function ReviewPage() {
     setPhotoPreview(URL.createObjectURL(file));
   };
 
+
   // =====================================================
   // REMOVE PHOTO
   // =====================================================
@@ -64,6 +63,7 @@ function ReviewPage() {
       fileInputRef.current.value = "";
     }
   };
+
 
   // =====================================================
   // UPLOAD PHOTO
@@ -118,6 +118,7 @@ function ReviewPage() {
     return data.photoUrl;
   };
 
+
   // =====================================================
   // SUBMIT REVIEW
   // =====================================================
@@ -128,32 +129,43 @@ function ReviewPage() {
     setError("");
     setMessage("");
 
-    if (!reviewToken) {
-      setError("Invalid review link.");
-      return;
-    }
+    // ---------------------------------------------
+    // VALIDATE NAME
+    // ---------------------------------------------
 
     if (!name.trim()) {
       setError("Please enter your name.");
       return;
     }
 
+
+    // ---------------------------------------------
+    // VALIDATE RATING
+    // ---------------------------------------------
+
     if (rating < 1 || rating > 5) {
       setError("Please select a rating.");
       return;
     }
+
+
+    // ---------------------------------------------
+    // VALIDATE REVIEW
+    // ---------------------------------------------
 
     if (!reviewText.trim()) {
       setError("Please write your review.");
       return;
     }
 
+
     setLoading(true);
 
     try {
-      // -------------------------------------------------
+
+      // =============================================
       // STEP 1: UPLOAD IMAGE
-      // -------------------------------------------------
+      // =============================================
 
       let photoUrl = null;
 
@@ -161,19 +173,21 @@ function ReviewPage() {
         photoUrl = await uploadPhoto();
       }
 
-      // -------------------------------------------------
+
+      // =============================================
       // STEP 2: CREATE REVIEW
-      // -------------------------------------------------
+      // =============================================
 
       const response = await fetch(
         `${API_BASE_URL}/reviews`,
         {
           method: "POST",
+
           headers: {
             "Content-Type": "application/json",
           },
+
           body: JSON.stringify({
-            reviewToken: reviewToken,
             customerName: name.trim(),
             rating: rating,
             reviewText: reviewText.trim(),
@@ -181,6 +195,7 @@ function ReviewPage() {
           }),
         }
       );
+
 
       const text = await response.text();
 
@@ -196,6 +211,11 @@ function ReviewPage() {
         }
       }
 
+
+      // =============================================
+      // HANDLE ERROR
+      // =============================================
+
       if (!response.ok) {
         throw new Error(
           data.message ||
@@ -205,12 +225,13 @@ function ReviewPage() {
         );
       }
 
-      // -------------------------------------------------
+
+      // =============================================
       // SUCCESS
-      // -------------------------------------------------
+      // =============================================
 
       setMessage(
-        "Thank you! Your review has been submitted successfully."
+        "Thank you! Your review has been submitted and is waiting for approval."
       );
 
       setName("");
@@ -218,43 +239,26 @@ function ReviewPage() {
       setReviewText("");
 
       removePhoto();
+
     } catch (err) {
-      console.error("Review submission error:", err);
+
+      console.error(
+        "Review submission error:",
+        err
+      );
 
       setError(
         err.message ||
           "Something went wrong while submitting your review."
       );
+
     } finally {
+
       setLoading(false);
+
     }
   };
 
-  // =====================================================
-  // INVALID TOKEN
-  // =====================================================
-
-  if (!reviewToken) {
-    return (
-      <div style={styles.page}>
-        <div style={styles.card}>
-          <div style={styles.header}>
-            <h1 style={styles.logo}>Restaurant</h1>
-
-            <div style={styles.divider}></div>
-
-            <h2 style={styles.title}>
-              Invalid Review Link
-            </h2>
-
-            <p style={styles.text}>
-              This review link is missing or invalid.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // =====================================================
   // PAGE
@@ -262,6 +266,7 @@ function ReviewPage() {
 
   return (
     <div style={styles.page}>
+
       <div style={styles.card}>
 
         {/* ============================================= */}
@@ -287,6 +292,7 @@ function ReviewPage() {
 
         </div>
 
+
         {/* ============================================= */}
         {/* FORM */}
         {/* ============================================= */}
@@ -296,6 +302,7 @@ function ReviewPage() {
           {/* NAME */}
 
           <div style={styles.formGroup}>
+
             <label style={styles.label}>
               Your Name
             </label>
@@ -310,18 +317,23 @@ function ReviewPage() {
               style={styles.input}
               disabled={loading}
             />
+
           </div>
+
 
           {/* RATING */}
 
           <div style={styles.formGroup}>
+
             <label style={styles.label}>
               Your Rating
             </label>
 
             <div style={styles.stars}>
+
               {[1, 2, 3, 4, 5].map(
                 (star) => (
+
                   <button
                     key={star}
                     type="button"
@@ -331,10 +343,12 @@ function ReviewPage() {
                     disabled={loading}
                     style={{
                       ...styles.starButton,
+
                       color:
                         star <= rating
                           ? "#e8bd68"
                           : "#555",
+
                       opacity:
                         star <= rating
                           ? 1
@@ -343,14 +357,19 @@ function ReviewPage() {
                   >
                     ★
                   </button>
+
                 )
               )}
+
             </div>
+
           </div>
+
 
           {/* REVIEW */}
 
           <div style={styles.formGroup}>
+
             <label style={styles.label}>
               Your Review
             </label>
@@ -365,17 +384,24 @@ function ReviewPage() {
               style={styles.textarea}
               disabled={loading}
             />
+
           </div>
+
 
           {/* PHOTO */}
 
           <div style={styles.formGroup}>
+
             <label style={styles.label}>
+
               Add a Photo{" "}
+
               <span style={styles.optional}>
                 (optional)
               </span>
+
             </label>
+
 
             <div style={styles.fileWrapper}>
 
@@ -390,13 +416,16 @@ function ReviewPage() {
               />
 
             </div>
+
           </div>
+
 
           {/* PHOTO PREVIEW */}
 
           <div
             style={{
               ...styles.previewContainer,
+
               display: photoPreview
                 ? "block"
                 : "flex",
@@ -404,12 +433,15 @@ function ReviewPage() {
           >
 
             {photoPreview ? (
+
               <>
+
                 <img
                   src={photoPreview}
                   alt="Review preview"
                   style={styles.preview}
                 />
+
 
                 <button
                   type="button"
@@ -419,9 +451,13 @@ function ReviewPage() {
                 >
                   Remove Photo
                 </button>
+
               </>
+
             ) : (
+
               <>
+
                 <div style={styles.photoIcon}>
                   ♧
                 </div>
@@ -429,26 +465,35 @@ function ReviewPage() {
                 <div style={styles.previewText}>
                   Your photo will appear here
                 </div>
+
               </>
+
             )}
 
           </div>
 
+
           {/* ERROR */}
 
           {error && (
+
             <div style={styles.error}>
               {error}
             </div>
+
           )}
+
 
           {/* SUCCESS */}
 
           {message && (
+
             <div style={styles.success}>
               {message}
             </div>
+
           )}
+
 
           {/* SUBMIT */}
 
@@ -457,20 +502,29 @@ function ReviewPage() {
             disabled={loading}
             style={{
               ...styles.submitButton,
-              opacity: loading ? 0.7 : 1,
-              cursor: loading
-                ? "not-allowed"
-                : "pointer",
+
+              opacity:
+                loading
+                  ? 0.7
+                  : 1,
+
+              cursor:
+                loading
+                  ? "not-allowed"
+                  : "pointer",
             }}
           >
+
             {loading
               ? photo
                 ? "Uploading & Submitting..."
                 : "Submitting..."
               : "Submit Review"}
+
           </button>
 
         </form>
+
 
         {/* ============================================= */}
         {/* FOOTER */}
@@ -487,9 +541,11 @@ function ReviewPage() {
         </div>
 
       </div>
+
     </div>
   );
 }
+
 
 // =====================================================
 // STYLES
@@ -517,6 +573,7 @@ const styles = {
       "'Georgia', 'Times New Roman', serif",
   },
 
+
   // ================================================
   // CARD
   // ================================================
@@ -536,6 +593,7 @@ const styles = {
     position: "relative",
   },
 
+
   // ================================================
   // HEADER
   // ================================================
@@ -544,6 +602,7 @@ const styles = {
     textAlign: "center",
     marginBottom: "42px",
   },
+
 
   logo: {
     margin: "0 0 25px",
@@ -554,12 +613,14 @@ const styles = {
     textTransform: "uppercase",
   },
 
+
   divider: {
     width: "45px",
     height: "2px",
     background: "#d9aa58",
     margin: "0 auto 28px",
   },
+
 
   title: {
     margin: "0 0 14px",
@@ -568,6 +629,7 @@ const styles = {
     lineHeight: "1.2",
     fontWeight: "500",
   },
+
 
   text: {
     margin: "0",
@@ -578,6 +640,7 @@ const styles = {
     lineHeight: "1.7",
   },
 
+
   // ================================================
   // FORM
   // ================================================
@@ -585,6 +648,7 @@ const styles = {
   formGroup: {
     marginBottom: "28px",
   },
+
 
   label: {
     display: "block",
@@ -596,10 +660,12 @@ const styles = {
     fontWeight: "600",
   },
 
+
   optional: {
     color: "#888",
     fontWeight: "400",
   },
+
 
   // ================================================
   // INPUT
@@ -620,6 +686,7 @@ const styles = {
       "Arial, Helvetica, sans-serif",
     fontSize: "16px",
   },
+
 
   // ================================================
   // TEXTAREA
@@ -643,6 +710,7 @@ const styles = {
     resize: "vertical",
   },
 
+
   // ================================================
   // STARS
   // ================================================
@@ -653,6 +721,7 @@ const styles = {
     gap: "5px",
     minHeight: "50px",
   },
+
 
   starButton: {
     border: "none",
@@ -666,6 +735,7 @@ const styles = {
       "transform 0.2s ease, color 0.2s ease",
   },
 
+
   // ================================================
   // FILE INPUT
   // ================================================
@@ -674,6 +744,7 @@ const styles = {
     width: "100%",
     boxSizing: "border-box",
   },
+
 
   fileInput: {
     width: "100%",
@@ -689,6 +760,7 @@ const styles = {
     fontSize: "15px",
     cursor: "pointer",
   },
+
 
   // ================================================
   // PREVIEW
@@ -709,6 +781,7 @@ const styles = {
     padding: "12px",
   },
 
+
   preview: {
     display: "block",
     width: "100%",
@@ -717,12 +790,15 @@ const styles = {
     borderRadius: "8px",
   },
 
+
   photoIcon: {
-    fontFamily: "Arial, sans-serif",
+    fontFamily:
+      "Arial, sans-serif",
     fontSize: "28px",
     color: "#777",
     marginBottom: "8px",
   },
+
 
   previewText: {
     color: "#777",
@@ -730,6 +806,7 @@ const styles = {
       "Arial, Helvetica, sans-serif",
     fontSize: "14px",
   },
+
 
   removeButton: {
     display: "block",
@@ -744,6 +821,7 @@ const styles = {
     textDecoration: "underline",
   },
 
+
   // ================================================
   // ERROR
   // ================================================
@@ -751,7 +829,8 @@ const styles = {
   error: {
     marginBottom: "20px",
     padding: "14px 16px",
-    background: "rgba(180, 35, 35, 0.15)",
+    background:
+      "rgba(180, 35, 35, 0.15)",
     border:
       "1px solid rgba(220, 80, 80, 0.35)",
     borderRadius: "8px",
@@ -761,6 +840,7 @@ const styles = {
     fontSize: "14px",
   },
 
+
   // ================================================
   // SUCCESS
   // ================================================
@@ -768,7 +848,8 @@ const styles = {
   success: {
     marginBottom: "20px",
     padding: "14px 16px",
-    background: "rgba(70, 140, 80, 0.12)",
+    background:
+      "rgba(70, 140, 80, 0.12)",
     border:
       "1px solid rgba(100, 180, 110, 0.3)",
     borderRadius: "8px",
@@ -777,6 +858,7 @@ const styles = {
       "Arial, Helvetica, sans-serif",
     fontSize: "14px",
   },
+
 
   // ================================================
   // SUBMIT BUTTON
@@ -802,6 +884,7 @@ const styles = {
       "transform 0.2s ease, opacity 0.2s ease",
   },
 
+
   // ================================================
   // FOOTER
   // ================================================
@@ -815,6 +898,7 @@ const styles = {
     fontSize: "10px",
     letterSpacing: "3px",
   },
+
 
   footerDivider: {
     width: "40px",

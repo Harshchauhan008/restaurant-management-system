@@ -21,6 +21,7 @@ public class PublicReviewController {
         this.reviewService = reviewService;
     }
 
+
     // =====================================================
     // CUSTOMER SUBMITS REVIEW
     // =====================================================
@@ -31,13 +32,12 @@ public class PublicReviewController {
             @RequestBody ReviewRequest request
     ) {
 
-        return reviewService.createReview(
-                request
-        );
+        return reviewService.createReview(request);
     }
 
+
     // =====================================================
-    // PUBLIC WEBSITE SHOWS ALL REVIEWS
+    // PUBLIC WEBSITE SHOWS APPROVED REVIEWS
     // =====================================================
 
     @GetMapping

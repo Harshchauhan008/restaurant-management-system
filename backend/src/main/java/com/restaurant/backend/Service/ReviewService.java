@@ -1,12 +1,10 @@
 package com.restaurant.backend.Service;
 
-import com.restaurant.backend.Repository.OrderRepository;
 import com.restaurant.backend.Repository.ReviewRepository;
 import com.restaurant.backend.dto.ReviewRequest;
 import com.restaurant.backend.dto.ReviewResponse;
-import com.restaurant.backend.entity.Order;
-import com.restaurant.backend.entity.OrderStatus;
 import com.restaurant.backend.entity.Review;
+import com.restaurant.backend.entity.ReviewStatus;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +19,6 @@ import java.util.List;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final OrderRepository orderRepository;
 
     // =====================================================
     // REVIEW IMAGE UPLOAD DIRECTORY
@@ -37,12 +34,8 @@ public class ReviewService {
     // CONSTRUCTOR
     // =====================================================
 
-    public ReviewService(
-            ReviewRepository reviewRepository,
-            OrderRepository orderRepository
-    ) {
+    public ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
-        this.orderRepository = orderRepository;
     }
 
 
@@ -60,19 +53,6 @@ public class ReviewService {
         if (request == null) {
             throw new RuntimeException(
                     "Review request is required"
-            );
-        }
-
-
-        // ---------------------------------------------
-        // VALIDATE REVIEW TOKEN
-        // ---------------------------------------------
-
-        if (request.getReviewToken() == null ||
-                request.getReviewToken().isBlank()) {
-
-            throw new RuntimeException(
-                    "Review token is required"
             );
         }
 
@@ -118,48 +98,6 @@ public class ReviewService {
 
 
         // ---------------------------------------------
-        // FIND ORDER USING REVIEW TOKEN
-        // ---------------------------------------------
-
-        Order order =
-                orderRepository
-                        .findByReviewToken(
-                                request.getReviewToken().trim()
-                        )
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Invalid review token"
-                                )
-                        );
-
-
-        // ---------------------------------------------
-        // ONLY COMPLETED ORDERS CAN BE REVIEWED
-        // ---------------------------------------------
-
-        if (order.getStatus() != OrderStatus.COMPLETED) {
-
-            throw new RuntimeException(
-                    "Only completed orders can be reviewed"
-            );
-        }
-
-
-        // ---------------------------------------------
-        // ONE REVIEW PER ORDER
-        // ---------------------------------------------
-
-        if (reviewRepository
-                .findByOrderId(order.getId())
-                .isPresent()) {
-
-            throw new RuntimeException(
-                    "A review already exists for this order"
-            );
-        }
-
-
-        // ---------------------------------------------
         // CREATE REVIEW
         // ---------------------------------------------
 
@@ -181,8 +119,30 @@ public class ReviewService {
                 request.getPhotoUrl()
         );
 
-        review.setOrder(
-                order
+
+        // ---------------------------------------------
+        // NO ORDER REQUIRED
+        // ---------------------------------------------
+        //
+        // Customer can submit a review directly
+        // from the public QR code.
+        //
+        // Therefore order is optional.
+        // ---------------------------------------------
+
+        review.setOrder(null);
+
+
+        // ---------------------------------------------
+        // NEW REVIEWS ARE IMMEDIATELY VISIBLE
+        // ---------------------------------------------
+        //
+        // No admin approval is required.
+        // Admin can delete the review if necessary.
+        // ---------------------------------------------
+
+        review.setStatus(
+                ReviewStatus.APPROVED
         );
 
 
@@ -193,25 +153,32 @@ public class ReviewService {
         Review saved =
                 reviewRepository.save(review);
 
-
         return toResponse(saved);
     }
 
 
     // =====================================================
-    // GET ALL PUBLIC REVIEWS
+    // GET APPROVED REVIEWS - PUBLIC
     // =====================================================
 
     @Transactional(readOnly = true)
     public List<ReviewResponse> getAllPublicReviews() {
 
-        List<Review> reviews =
-                reviewRepository
-                        .findAllByOrderByCreatedAtDesc();
-
-        return reviews
+        return reviewRepository
+                .findAll()
                 .stream()
-                .map(review -> toResponse(review))
+                .filter(review ->
+                        review.getStatus() ==
+                                ReviewStatus.APPROVED
+                )
+                .sorted(
+                        (a, b) ->
+                                b.getCreatedAt()
+                                        .compareTo(
+                                                a.getCreatedAt()
+                                        )
+                )
+                .map(this::toResponse)
                 .toList();
     }
 
@@ -223,14 +190,77 @@ public class ReviewService {
     @Transactional(readOnly = true)
     public List<ReviewResponse> getAllReviews() {
 
-        List<Review> reviews =
-                reviewRepository
-                        .findAllByOrderByCreatedAtDesc();
-
-        return reviews
+        return reviewRepository
+                .findAll()
                 .stream()
-                .map(review -> toResponse(review))
+                .sorted(
+                        (a, b) ->
+                                b.getCreatedAt()
+                                        .compareTo(
+                                                a.getCreatedAt()
+                                        )
+                )
+                .map(this::toResponse)
                 .toList();
+    }
+
+
+    // =====================================================
+    // GET REVIEWS BY STATUS - ADMIN
+    // =====================================================
+
+    @Transactional(readOnly = true)
+    public List<ReviewResponse> getReviewsByStatus(
+            ReviewStatus status
+    ) {
+
+        if (status == null) {
+            throw new RuntimeException(
+                    "Review status is required"
+            );
+        }
+
+        return reviewRepository
+                .findAll()
+                .stream()
+                .filter(review ->
+                        review.getStatus() == status
+                )
+                .sorted(
+                        (a, b) ->
+                                b.getCreatedAt()
+                                        .compareTo(
+                                                a.getCreatedAt()
+                                        )
+                )
+                .map(this::toResponse)
+                .toList();
+    }
+
+
+    // =====================================================
+    // APPROVE REVIEW - ADMIN
+    // =====================================================
+    //
+    // Kept for compatibility with the existing backend.
+    // New reviews no longer need approval because they
+    // are automatically APPROVED.
+    // =====================================================
+
+    @Transactional
+    public ReviewResponse approveReview(Long reviewId) {
+
+        Review review =
+                getReviewEntity(reviewId);
+
+        review.setStatus(
+                ReviewStatus.APPROVED
+        );
+
+        Review saved =
+                reviewRepository.save(review);
+
+        return toResponse(saved);
     }
 
 
@@ -246,7 +276,7 @@ public class ReviewService {
 
 
         // ---------------------------------------------
-        // SAVE IMAGE URL BEFORE DELETING REVIEW
+        // SAVE IMAGE URL BEFORE DELETE
         // ---------------------------------------------
 
         String photoUrl =
@@ -274,7 +304,10 @@ public class ReviewService {
 
     private void deleteReviewPhoto(String photoUrl) {
 
-        // No image attached
+        // ---------------------------------------------
+        // NO IMAGE
+        // ---------------------------------------------
+
         if (photoUrl == null ||
                 photoUrl.isBlank()) {
 
@@ -282,14 +315,15 @@ public class ReviewService {
         }
 
 
-        // Our review images use this URL
+        // ---------------------------------------------
+        // ONLY HANDLE OUR REVIEW UPLOADS
+        // ---------------------------------------------
+
         String prefix =
                 "/uploads/reviews/";
 
 
-        // Don't delete files outside our upload folder
         if (!photoUrl.startsWith(prefix)) {
-
             return;
         }
 
@@ -341,8 +375,8 @@ public class ReviewService {
             /*
              * Review is already deleted from database.
              *
-             * Do not fail the API only because
-             * the image file could not be deleted.
+             * Do not fail the API just because
+             * image deletion failed.
              */
 
             System.err.println(
@@ -371,7 +405,6 @@ public class ReviewService {
             );
         }
 
-
         return reviewRepository
                 .findById(reviewId)
                 .orElseThrow(() ->
@@ -393,13 +426,13 @@ public class ReviewService {
         }
 
 
+        // ---------------------------------------------
+        // ORDER IS OPTIONAL
+        // ---------------------------------------------
+
         Long orderId = null;
         String orderNumber = null;
 
-
-        // ---------------------------------------------
-        // GET ORDER INFORMATION
-        // ---------------------------------------------
 
         if (review.getOrder() != null) {
 
@@ -433,7 +466,9 @@ public class ReviewService {
 
                 review.getPhotoUrl(),
 
-                review.getCreatedAt()
+                review.getCreatedAt(),
+
+                review.getStatus()
         );
     }
 }

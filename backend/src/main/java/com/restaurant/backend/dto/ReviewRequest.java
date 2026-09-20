@@ -2,8 +2,6 @@ package com.restaurant.backend.dto;
 
 public class ReviewRequest {
 
-    private String reviewToken;
-
     private String customerName;
 
     private Integer rating;
@@ -14,15 +12,6 @@ public class ReviewRequest {
 
 
     public ReviewRequest() {
-    }
-
-
-    public String getReviewToken() {
-        return reviewToken;
-    }
-
-    public void setReviewToken(String reviewToken) {
-        this.reviewToken = reviewToken;
     }
 
 

@@ -10,6 +10,11 @@ function Review() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [imageErrors, setImageErrors] = useState({});
+  const [startIndex, setStartIndex] = useState(0);
+
+  // =====================================================
+  // FETCH REVIEWS
+  // =====================================================
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -42,6 +47,47 @@ function Review() {
     fetchReviews();
   }, []);
 
+
+  // =====================================================
+  // REVIEW QUEUE
+  // =====================================================
+  //
+  // Show 3 reviews at a time.
+  //
+  // Example:
+  //
+  // 1 2 3
+  // 2 3 4
+  // 3 4 5
+  // 4 5 6
+  //
+  // One review moves out and the next one comes in.
+  // =====================================================
+
+  useEffect(() => {
+    if (loading || reviews.length <= 3) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setStartIndex((previousIndex) => {
+        return (previousIndex + 1) % reviews.length;
+      });
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [loading, reviews.length]);
+
+
+  // =====================================================
+  // RESET QUEUE WHEN REVIEWS CHANGE
+  // =====================================================
+
+  useEffect(() => {
+    setStartIndex(0);
+  }, [reviews.length]);
+
+
   // =====================================================
   // IMAGE URL
   // =====================================================
@@ -61,6 +107,7 @@ function Review() {
     return `${BACKEND_BASE_URL}${photoUrl}`;
   };
 
+
   // =====================================================
   // IMAGE ERROR
   // =====================================================
@@ -71,6 +118,7 @@ function Review() {
       [reviewId]: true,
     }));
   };
+
 
   // =====================================================
   // DIFFERENT COLORS FOR NO-IMAGE REVIEWS
@@ -87,6 +135,7 @@ function Review() {
 
     return colors[index % colors.length];
   };
+
 
   // =====================================================
   // LOADING REVIEWS
@@ -110,13 +159,36 @@ function Review() {
     },
   ];
 
+
   // =====================================================
-  // REVIEWS TO DISPLAY
+  // GET 3 REVIEWS FROM QUEUE
   // =====================================================
 
-  const displayedReviews = loading
-    ? loadingReviews
-    : reviews;
+  const getDisplayedReviews = () => {
+    if (loading) {
+      return loadingReviews;
+    }
+
+    if (reviews.length <= 3) {
+      return reviews;
+    }
+
+    const displayed = [];
+
+    for (let i = 0; i < 3; i++) {
+      const index =
+        (startIndex + i) % reviews.length;
+
+      displayed.push(reviews[index]);
+    }
+
+    return displayed;
+  };
+
+
+  const displayedReviews =
+    getDisplayedReviews();
+
 
   return (
     <section
@@ -142,6 +214,7 @@ function Review() {
           evenings at Restaurant.
         </p>
 
+
         {/* =================================================
             REVIEWS
         ================================================= */}
@@ -163,140 +236,152 @@ function Review() {
 
           <div className="reviews-grid">
 
-            {displayedReviews.map((review, index) => {
+            {displayedReviews.map(
+              (review, index) => {
 
-              const imageUrl =
-                getImageUrl(review.photoUrl);
+                const imageUrl =
+                  getImageUrl(
+                    review.photoUrl
+                  );
 
-              const hasImage =
-                Boolean(imageUrl) &&
-                !imageErrors[review.id];
+                const hasImage =
+                  Boolean(imageUrl) &&
+                  !imageErrors[review.id];
 
-              const noImageClass =
-                !hasImage
-                  ? `review-card-no-image ${getNoImageColorClass(
-                      index
-                    )}`
-                  : "";
+                const noImageClass =
+                  !hasImage
+                    ? `review-card-no-image ${getNoImageColorClass(
+                        index
+                      )}`
+                    : "";
 
-              return (
-                <article
-                  className={`review-card ${noImageClass}`}
-                  key={review.id}
-                >
+                return (
+                  <article
+                    className={`review-card ${noImageClass}`}
+                    key={review.id}
+                  >
 
-                  {/* =====================================
-                      IMAGE / TESTIMONIAL
-                  ===================================== */}
+                    {/* =====================================
+                        IMAGE / TESTIMONIAL
+                    ===================================== */}
 
-                  <div className="review-image-wrapper">
+                    <div className="review-image-wrapper">
 
-                    {loading ? (
+                      {loading ? (
 
-                      <div
-                        className="review-testimonial"
-                        style={{
-                          opacity: 0.55,
-                        }}
-                      >
+                        <div
+                          className="review-testimonial"
+                          style={{
+                            opacity: 0.55,
+                          }}
+                        >
 
-                        <div className="review-brand">
-                          Restaurant
+                          <div className="review-brand">
+                            Restaurant
+                          </div>
+
+                          <div className="review-brand-line"></div>
+
+                          <p className="review-no-image-text">
+                            "Loading guest experience..."
+                          </p>
+
+                          <div className="review-quote-mark">
+                            ”
+                          </div>
+
                         </div>
 
-                        <div className="review-brand-line"></div>
+                      ) : hasImage ? (
 
-                        <p className="review-no-image-text">
-                          "Loading guest experience..."
-                        </p>
+                        <img
+                          src={imageUrl}
+                          alt={`${review.customerName || "Guest"}'s experience`}
+                          className="review-image"
+                          onError={() =>
+                            handleImageError(
+                              review.id
+                            )
+                          }
+                        />
 
-                        <div className="review-quote-mark">
-                          ”
+                      ) : (
+
+                        <div className="review-testimonial">
+
+                          {/* RESTAURANT NAME */}
+
+                          <div className="review-brand">
+                            Restaurant
+                          </div>
+
+                          {/* DECORATIVE LINE */}
+
+                          <div className="review-brand-line"></div>
+
+                          {/* REVIEW */}
+
+                          <p className="review-no-image-text">
+                            "{review.reviewText}"
+                          </p>
+
+                          {/* DECORATIVE QUOTE */}
+
+                          <div className="review-quote-mark">
+                            ”
+                          </div>
+
                         </div>
 
-                      </div>
-
-                    ) : hasImage ? (
-
-                      <img
-                        src={imageUrl}
-                        alt={`${review.customerName || "Guest"}'s experience`}
-                        className="review-image"
-                        onError={() =>
-                          handleImageError(review.id)
-                        }
-                      />
-
-                    ) : (
-
-                      <div className="review-testimonial">
-
-                        {/* RESTAURANT NAME */}
-
-                        <div className="review-brand">
-                          Restaurant
-                        </div>
-
-                        {/* DECORATIVE LINE */}
-
-                        <div className="review-brand-line"></div>
-
-                        {/* REVIEW */}
-
-                        <p className="review-no-image-text">
-                          "{review.reviewText}"
-                        </p>
-
-                        {/* DECORATIVE QUOTE */}
-
-                        <div className="review-quote-mark">
-                          ”
-                        </div>
-
-                      </div>
-
-                    )}
-
-                  </div>
-
-                  {/* =====================================
-                      REVIEW CONTENT
-                  ===================================== */}
-
-                  <div className="review-content">
-
-                    {!loading && hasImage && (
-                      <p className="review-text">
-                        "{review.reviewText}"
-                      </p>
-                    )}
-
-                    {/* EMPTY ITEM SPACE
-                        Keeps existing card structure */}
-
-                    <div className="review-item"></div>
-
-                    {/* CUSTOMER */}
-
-                    <div className="review-author">
-
-                      <strong>
-                        {loading
-                          ? "Loading..."
-                          : review.customerName || "Guest"}
-                      </strong>
-
-                      <span>
-                        Guest
-                      </span>
+                      )}
 
                     </div>
 
-                  </div>
 
-                </article>
-              );
-            })}
+                    {/* =====================================
+                        REVIEW CONTENT
+                    ===================================== */}
+
+                    <div className="review-content">
+
+                      {!loading &&
+                        hasImage && (
+
+                          <p className="review-text">
+                            "{review.reviewText}"
+                          </p>
+
+                        )}
+
+
+                      {/* EMPTY ITEM SPACE */}
+
+                      <div className="review-item"></div>
+
+
+                      {/* CUSTOMER */}
+
+                      <div className="review-author">
+
+                        <strong>
+                          {loading
+                            ? "Loading..."
+                            : review.customerName ||
+                              "Guest"}
+                        </strong>
+
+                        <span>
+                          Guest
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                  </article>
+                );
+              }
+            )}
 
           </div>
 

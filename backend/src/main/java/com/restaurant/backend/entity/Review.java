@@ -5,15 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(
-        name = "reviews",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name = "uk_review_order",
-                        columnNames = "order_id"
-                )
-        }
-)
+@Table(name = "reviews")
 public class Review {
 
     @Id
@@ -37,18 +29,26 @@ public class Review {
     private String photoUrl;
 
     /*
-     * One order can have only one review.
+     * Optional order.
+     *
+     * A customer can submit a review directly
+     * through the restaurant QR code without
+     * being associated with a specific order.
      */
-    @OneToOne(
-            fetch = FetchType.LAZY,
-            optional = false
-    )
+    @OneToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(
             name = "order_id",
-            nullable = false,
+            nullable = true,
             unique = true
     )
     private Order order;
+
+    /*
+     * New reviews require admin approval.
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ReviewStatus status = ReviewStatus.PENDING;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -98,6 +98,14 @@ public class Review {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public ReviewStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ReviewStatus status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreatedAt() {

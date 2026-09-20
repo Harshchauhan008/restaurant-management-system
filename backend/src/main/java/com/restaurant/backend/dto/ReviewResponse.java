@@ -1,5 +1,7 @@
 package com.restaurant.backend.dto;
 
+import com.restaurant.backend.entity.ReviewStatus;
+
 import java.time.LocalDateTime;
 
 public class ReviewResponse {
@@ -7,15 +9,25 @@ public class ReviewResponse {
     private Long id;
 
     private Long orderId;
+
     private String orderNumber;
 
     private String customerName;
+
     private Integer rating;
+
     private String reviewText;
+
     private String photoUrl;
 
     private LocalDateTime createdAt;
 
+    private ReviewStatus status;
+
+
+    // =====================================================
+    // CONSTRUCTOR
+    // =====================================================
 
     public ReviewResponse(
             Long id,
@@ -25,8 +37,10 @@ public class ReviewResponse {
             Integer rating,
             String reviewText,
             String photoUrl,
-            LocalDateTime createdAt
+            LocalDateTime createdAt,
+            ReviewStatus status
     ) {
+
         this.id = id;
         this.orderId = orderId;
         this.orderNumber = orderNumber;
@@ -35,8 +49,13 @@ public class ReviewResponse {
         this.reviewText = reviewText;
         this.photoUrl = photoUrl;
         this.createdAt = createdAt;
+        this.status = status;
     }
 
+
+    // =====================================================
+    // GETTERS
+    // =====================================================
 
     public Long getId() {
         return id;
@@ -68,5 +87,9 @@ public class ReviewResponse {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public ReviewStatus getStatus() {
+        return status;
     }
 }
