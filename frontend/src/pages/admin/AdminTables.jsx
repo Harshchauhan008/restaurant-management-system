@@ -496,7 +496,7 @@ function AdminTables() {
           <div class="qr-sheet">
 
             <h1>
-              THE LOOKOUT
+              Restaurant
             </h1>
 
             <h2>

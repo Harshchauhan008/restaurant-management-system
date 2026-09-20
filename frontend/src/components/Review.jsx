@@ -139,7 +139,7 @@ function Review() {
 
         <p className="section-subtitle">
           Real experiences, favourite dishes and memorable
-          evenings at The Lookout.
+          evenings at Restaurant.
         </p>
 
         {/* =================================================
@@ -201,7 +201,7 @@ function Review() {
                       >
 
                         <div className="review-brand">
-                          THE LOOKOUT
+                          Restaurant
                         </div>
 
                         <div className="review-brand-line"></div>
@@ -234,7 +234,7 @@ function Review() {
                         {/* RESTAURANT NAME */}
 
                         <div className="review-brand">
-                          THE LOOKOUT
+                          Restaurant
                         </div>
 
                         {/* DECORATIVE LINE */}

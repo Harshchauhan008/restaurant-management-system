@@ -20,7 +20,7 @@ function About() {
           </h2>
 
           <p>
-            The Lookout is a cozy rooftop cafe in the heart
+            Restaurant is a cozy rooftop cafe in the heart
             of Majnu ka Tila, serving comfort food with a
             view and a vibe worth staying for.
           </p>
@@ -66,12 +66,12 @@ function About() {
 
           <img
             src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85"
-            alt="Thukpa at The Lookout"
+            alt="Thukpa at Restaurant"
             className="about-image"
           />
 
           <div className="about-image-label">
-            <span>THE LOOKOUT</span>
+            <span>Restaurant</span>
             <strong>Comfort on a plate.</strong>
           </div>
 

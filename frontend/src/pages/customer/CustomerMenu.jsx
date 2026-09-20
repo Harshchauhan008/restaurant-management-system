@@ -756,7 +756,7 @@ function CustomerMenu() {
         <div className="container customer-menu-header-inner">
           <div>
             <span className="eyebrow">
-              THE LOOKOUT
+              Restaurant
             </span>
 
             <h1>

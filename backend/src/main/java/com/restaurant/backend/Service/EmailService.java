@@ -126,7 +126,7 @@ public void sendAdminPasswordResetEmail(
     }
 
     String subject =
-            "Reset Your Admin Password - The Lookout";
+            "Reset Your Admin Password - Restaurant";
 
     String message =
             "Dear " +
@@ -134,7 +134,7 @@ public void sendAdminPasswordResetEmail(
                     ",\n\n" +
 
             "We received a request to reset your " +
-            "The Lookout admin account password.\n\n" +
+            "Restaurant admin account password.\n\n" +
 
             "Account Details\n" +
             "--------------------------\n" +
@@ -165,7 +165,7 @@ public void sendAdminPasswordResetEmail(
             "with anyone.\n\n" +
 
             "Regards,\n" +
-            "The Lookout";
+            "Restaurant";
 
     SimpleMailMessage mail =
             new SimpleMailMessage();

@@ -44,7 +44,7 @@ function Gallery() {
           </span>
 
           <h2 className="section-title">
-            A glimpse of The Lookout
+            A glimpse of Restaurant
           </h2>
 
           <p className="section-subtitle">

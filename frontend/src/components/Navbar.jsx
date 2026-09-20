@@ -10,7 +10,7 @@ function Navbar() {
       <div className="container nav-wrapper">
 
         <a href="#top" className="nav-logo">
-          THE LOOKOUT
+          Restaurant
         </a>
 
         <nav className="nav-links">

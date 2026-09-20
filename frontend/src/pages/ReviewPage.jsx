@@ -239,7 +239,7 @@ function ReviewPage() {
       <div style={styles.page}>
         <div style={styles.card}>
           <div style={styles.header}>
-            <h1 style={styles.logo}>THE LOOKOUT</h1>
+            <h1 style={styles.logo}>Restaurant</h1>
 
             <div style={styles.divider}></div>
 
@@ -271,7 +271,7 @@ function ReviewPage() {
         <div style={styles.header}>
 
           <h1 style={styles.logo}>
-            THE LOOKOUT
+            Restaurant
           </h1>
 
           <div style={styles.divider}></div>

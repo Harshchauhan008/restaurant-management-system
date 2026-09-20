@@ -86,7 +86,7 @@ function ForgotPassword() {
             fontFamily: "'Lora', Georgia, serif",
           }}
         >
-          THE LOOKOUT
+          Restaurant
         </h1>
 
         <p

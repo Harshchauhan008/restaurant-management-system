@@ -598,7 +598,7 @@ function Reservation() {
               }}
             >
               Reserve your table at
-              The Lookout.
+              Restaurant.
             </p>
           </div>
 

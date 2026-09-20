@@ -377,7 +377,7 @@ function AdminSettings() {
                             <label>Restaurant Name</label>
                             <input type="text" value={restaurant.restaurantName}
                                 onChange={(e) => setRestaurant({ ...restaurant, restaurantName: e.target.value })}
-                                placeholder="The Lookout Cafe" required />
+                                placeholder="Restaurant Cafe" required />
                         </div>
                         <div className="form-group">
                             <label>Logo URL</label>
@@ -398,7 +398,7 @@ function AdminSettings() {
                             <label>Receipt Header</label>
                             <textarea rows="3" value={restaurant.receiptHeader}
                                 onChange={(e) => setRestaurant({ ...restaurant, receiptHeader: e.target.value })}
-                                placeholder="THE LOOKOUT CAFE" />
+                                placeholder="Restaurant CAFE" />
                         </div>
                         <div className="form-group full">
                             <label>Receipt Footer</label>

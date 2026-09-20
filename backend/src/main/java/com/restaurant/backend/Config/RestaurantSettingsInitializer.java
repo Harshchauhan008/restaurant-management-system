@@ -23,7 +23,7 @@ public class RestaurantSettingsInitializer {
                         new RestaurantSettings();
 
                 settings.setRestaurantName(
-                        "THE LOOKOUT CAFE"
+                        "Restaurant CAFE"
                 );
 
                 settings.setLogoUrl(
@@ -47,7 +47,7 @@ public class RestaurantSettingsInitializer {
                 );
 
                 settings.setReceiptHeader(
-                        "THE LOOKOUT CAFE"
+                        "Restaurant CAFE"
                 );
 
                 settings.setReceiptFooter(

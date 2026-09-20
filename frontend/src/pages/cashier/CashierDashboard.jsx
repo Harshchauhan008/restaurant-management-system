@@ -887,7 +887,7 @@ function CashierDashboard() {
                     </head>
                     <body>
                         <div class="receipt">
-                            <h1>THE LOOKOUT</h1>
+                            <h1>Restaurant</h1>
                             <div class="receipt-body">${escaped}</div>
                         </div>
                     </body>

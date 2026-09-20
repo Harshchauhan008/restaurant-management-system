@@ -188,7 +188,7 @@ function AdminLayout() {
           <div className="admin-brand">
 
             <span className="admin-brand-small">
-              THE LOOKOUT
+              Restaurant
             </span>
 
             <h2 className="admin-brand-title">

@@ -144,7 +144,7 @@ function GuestReviews() {
         </button>
 
         <div style={styles.logo}>
-          THE LOOKOUT
+          Restaurant
         </div>
 
         <div style={styles.divider}></div>
@@ -289,7 +289,7 @@ function GuestReviews() {
                         style={styles.noImage}
                       >
                         <span>
-                          THE LOOKOUT
+                          Restaurant
                         </span>
                       </div>
                     )}
@@ -378,7 +378,7 @@ function GuestReviews() {
         ></div>
 
         <div style={styles.footerLogo}>
-          THE LOOKOUT
+          Restaurant
         </div>
 
         <p>

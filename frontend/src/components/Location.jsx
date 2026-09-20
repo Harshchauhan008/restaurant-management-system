@@ -11,7 +11,7 @@ function Location() {
         <div className="map-wrapper">
 
           <iframe
-            title="The Lookout Location"
+            title="Restaurant Location"
             src="https://www.google.com/maps?q=Majnu+ka+Tila+Delhi&output=embed"
             loading="lazy"
           />
@@ -27,7 +27,7 @@ function Location() {
           </span>
 
           <h2 className="section-title">
-            Come visit The Lookout
+            Come visit Restaurant
           </h2>
 
           <p>

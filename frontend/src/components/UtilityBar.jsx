@@ -10,7 +10,7 @@ function UtilityBar() {
         </div>
 
         <div className="utility-logo">
-          🏔 THE LOOKOUT CAFE
+          🏔 Restaurant CAFE
         </div>
 
         <div className="utility-hours">

@@ -10,7 +10,7 @@ function Hero() {
 
       <img
         src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2200&q=90"
-        alt="The Lookout Rooftop"
+        alt="Restaurant Rooftop"
         className="hero-bg"
       />
 
@@ -23,7 +23,7 @@ function Hero() {
         </div>
 
         <h1 className="hero-title">
-          The Lookout
+          Restaurant
         </h1>
 
         <p className="hero-tagline">

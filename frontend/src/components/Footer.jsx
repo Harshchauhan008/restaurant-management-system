@@ -27,7 +27,7 @@ function Footer() {
         <div className="footer-brand">
 
           <h2>
-            THE LOOKOUT
+            Restaurant
           </h2>
 
           <p>
@@ -75,7 +75,7 @@ function Footer() {
         <div className="container">
 
           <span>
-            © 2026 The Lookout. All rights reserved.
+            © 2026 Restaurant. All rights reserved.
           </span>
 
           <a href="#top">
