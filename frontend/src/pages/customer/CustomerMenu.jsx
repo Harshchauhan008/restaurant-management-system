@@ -28,14 +28,17 @@ function CustomerMenu() {
   const [sessionCode, setSessionCode] = useState("");
   const [sessionCodeInput, setSessionCodeInput] = useState("");
   const [sessionCodeError, setSessionCodeError] = useState("");
-  const [showSessionCodeModal, setShowSessionCodeModal] = useState(false);
+  const [showSessionCodeModal, setShowSessionCodeModal] =
+    useState(false);
   const [pendingOrderBody, setPendingOrderBody] = useState(null);
 
   // =====================================================
   // GET QR TOKEN
   // =====================================================
 
-  const qrToken = new URLSearchParams(window.location.search).get("table");
+  const qrToken = new URLSearchParams(
+    window.location.search
+  ).get("table");
 
   // =====================================================
   // IMAGE URL HELPER
@@ -114,12 +117,8 @@ function CustomerMenu() {
           categoriesResponse,
           itemsResponse,
         ] = await Promise.all([
-          fetch(
-            `${API_BASE_URL}/menu/categories`
-          ),
-          fetch(
-            `${API_BASE_URL}/menu/items`
-          ),
+          fetch(`${API_BASE_URL}/menu/categories`),
+          fetch(`${API_BASE_URL}/menu/items`),
         ]);
 
         const categoriesData =
@@ -316,17 +315,13 @@ function CustomerMenu() {
         {
           method: "POST",
           headers: {
-            "Content-Type":
-              "application/json",
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(
-            requestBody
-          ),
+          body: JSON.stringify(requestBody),
         }
       );
 
-      const data =
-        await response.json();
+      const data = await response.json();
 
       // =================================================
       // ACTIVE SESSION EXISTS
@@ -646,10 +641,7 @@ function CustomerMenu() {
                     .replace(/\D/g, "")
                     .slice(0, 4);
 
-                setSessionCodeInput(
-                  value
-                );
-
+                setSessionCodeInput(value);
                 setSessionCodeError("");
               }}
               onKeyDown={(event) => {
@@ -703,9 +695,7 @@ function CustomerMenu() {
                 onClick={
                   closeSessionCodeModal
                 }
-                disabled={
-                  placingOrder
-                }
+                disabled={placingOrder}
                 style={{
                   flex: 1,
                   padding: "13px",
@@ -754,6 +744,7 @@ function CustomerMenu() {
 
       <header className="customer-menu-header">
         <div className="container customer-menu-header-inner">
+
           <div>
             <span className="eyebrow">
               Restaurant
@@ -783,6 +774,7 @@ function CustomerMenu() {
               ₹{cartTotal.toFixed(2)}
             </strong>
           </div>
+
         </div>
       </header>
 
@@ -804,7 +796,9 @@ function CustomerMenu() {
 
         {orderSuccess && (
           <section className="customer-order-confirmation">
+
             <div className="customer-confirmation-top">
+
               <div className="customer-success-icon">
                 ✓
               </div>
@@ -823,9 +817,13 @@ function CustomerMenu() {
                   to our kitchen.
                 </p>
               </div>
+
             </div>
 
+            {/* ORDER INFORMATION */}
+
             <div className="customer-order-info-grid">
+
               <div className="customer-order-info-card">
                 <span>
                   ORDER NUMBER
@@ -868,7 +866,10 @@ function CustomerMenu() {
                   ).toFixed(2)}
                 </strong>
               </div>
+
             </div>
+
+            {/* SESSION CODE */}
 
             {orderSuccess.sessionCode && (
               <div
@@ -909,70 +910,117 @@ function CustomerMenu() {
               </div>
             )}
 
+            {/* =================================================
+                RECEIPT STYLE ORDER SUMMARY
+            ================================================= */}
+
             <div className="customer-confirmation-items">
+
               <div className="customer-confirmation-items-header">
-                <h3>
-                  Your Items
-                </h3>
+
+                <div>
+                  <span className="eyebrow">
+                    ORDER SUMMARY
+                  </span>
+
+                  <h3>
+                    Items Ordered
+                  </h3>
+                </div>
 
                 <span>
-                  {orderSuccess.items?.length || 0}
-                  {" "}
-                  item types
+                  {orderSuccess.items?.reduce(
+                    (total, item) =>
+                      total + item.quantity,
+                    0
+                  ) || 0}{" "}
+                  items
                 </span>
+
               </div>
 
-              {orderSuccess.items?.map(
-                (item) => (
-                  <div
-                    className="customer-confirmation-item"
-                    key={item.menuItemId}
-                  >
-                    <div>
-                      <strong>
-                        {item.menuItemName}
-                      </strong>
+              <div className="customer-receipt">
 
-                      <span>
+                {orderSuccess.items?.map(
+                  (item) => (
+                    <div
+                      className="customer-receipt-item"
+                      key={item.menuItemId}
+                    >
+
+                      <div className="customer-receipt-item-left">
+
+                        <strong>
+                          {item.menuItemName}
+                        </strong>
+
+                        <span>
+                          ₹
+                          {Number(
+                            item.unitPrice
+                          ).toFixed(2)}
+                          {" × "}
+                          {item.quantity}
+                        </span>
+
+                        {item.specialInstruction && (
+                          <small>
+                            Note:{" "}
+                            {item.specialInstruction}
+                          </small>
+                        )}
+
+                      </div>
+
+                      <strong className="customer-receipt-item-price">
                         ₹
                         {Number(
-                          item.unitPrice
+                          item.totalPrice
                         ).toFixed(2)}
-                        {" × "}
-                        {item.quantity}
-                      </span>
+                      </strong>
 
-                      {item.specialInstruction && (
-                        <small>
-                          Note:{" "}
-                          {item.specialInstruction}
-                        </small>
-                      )}
                     </div>
+                  )
+                )}
 
-                    <strong>
-                      ₹
-                      {Number(
-                        item.totalPrice
-                      ).toFixed(2)}
-                    </strong>
-                  </div>
-                )
-              )}
+                <div className="customer-receipt-divider" />
+
+                <div className="customer-receipt-subtotal">
+
+                  <span>
+                    Total Items
+                  </span>
+
+                  <strong>
+                    {orderSuccess.items?.reduce(
+                      (total, item) =>
+                        total + item.quantity,
+                      0
+                    ) || 0}
+                  </strong>
+
+                </div>
+
+                <div className="customer-receipt-total">
+
+                  <span>
+                    Total Amount
+                  </span>
+
+                  <strong>
+                    ₹
+                    {Number(
+                      orderSuccess.totalAmount
+                    ).toFixed(2)}
+                  </strong>
+
+                </div>
+
+              </div>
+
             </div>
 
-            <div className="customer-confirmation-total">
-              <span>
-                Total Amount
-              </span>
-
-              <strong>
-                ₹
-                {Number(
-                  orderSuccess.totalAmount
-                ).toFixed(2)}
-              </strong>
-            </div>
+            {/* NEW ORDER */}
 
             <button
               className="btn btn-primary customer-new-order-button"
@@ -980,6 +1028,7 @@ function CustomerMenu() {
             >
               Continue Ordering
             </button>
+
           </section>
         )}
 
@@ -989,7 +1038,203 @@ function CustomerMenu() {
 
         {!orderSuccess && (
           <>
+
+            {/* =================================================
+                YOUR ORDER - TOP
+            ================================================= */}
+
+            <section className="customer-cart customer-cart-top">
+
+              <div className="customer-cart-header">
+
+                <div>
+                  <span className="eyebrow">
+                    YOUR ORDER
+                  </span>
+
+                  <h2>
+                    Cart
+                  </h2>
+                </div>
+
+                <strong>
+                  {cartCount}{" "}
+                  {cartCount === 1
+                    ? "item"
+                    : "items"}
+                </strong>
+
+              </div>
+
+              {cart.length === 0 ? (
+
+                <div className="customer-cart-empty">
+
+                  <div className="customer-cart-empty-icon">
+                    🛒
+                  </div>
+
+                  <div>
+                    <h3>
+                      Your cart is empty
+                    </h3>
+
+                    <p>
+                      Add dishes from the menu below.
+                    </p>
+                  </div>
+
+                </div>
+
+              ) : (
+
+                <div className="customer-cart-items">
+
+                  {cart.map(
+                    (item) => (
+                      <div
+                        className="customer-cart-item"
+                        key={item.menuItemId}
+                      >
+
+                        <div className="customer-cart-item-main">
+
+                          <div className="customer-cart-item-info">
+
+                            <h4>
+                              {item.menuItemName}
+                            </h4>
+
+                            <span>
+                              ₹
+                              {Number(
+                                item.unitPrice
+                              ).toFixed(2)}
+                              {" "}each
+                            </span>
+
+                          </div>
+
+                          <button
+                            className="customer-remove-button"
+                            onClick={() =>
+                              removeFromCart(
+                                item.menuItemId
+                              )
+                            }
+                            title="Remove item"
+                          >
+                            ×
+                          </button>
+
+                        </div>
+
+                        <div className="customer-cart-item-bottom">
+
+                          <div className="customer-quantity-row">
+
+                            <button
+                              onClick={() =>
+                                updateQuantity(
+                                  item.menuItemId,
+                                  item.quantity - 1
+                                )
+                              }
+                            >
+                              −
+                            </button>
+
+                            <span>
+                              {item.quantity}
+                            </span>
+
+                            <button
+                              onClick={() =>
+                                updateQuantity(
+                                  item.menuItemId,
+                                  item.quantity + 1
+                                )
+                              }
+                            >
+                              +
+                            </button>
+
+                          </div>
+
+                          <strong className="customer-cart-item-total">
+                            ₹
+                            {(
+                              Number(
+                                item.unitPrice
+                              ) *
+                              item.quantity
+                            ).toFixed(2)}
+                          </strong>
+
+                        </div>
+
+                        <textarea
+                          placeholder="Special instruction (optional)"
+                          value={
+                            item.specialInstruction
+                          }
+                          onChange={(event) =>
+                            updateInstruction(
+                              item.menuItemId,
+                              event.target.value
+                            )
+                          }
+                          rows={2}
+                        />
+
+                      </div>
+                    )
+                  )}
+
+                </div>
+
+              )}
+
+              {/* CART FOOTER */}
+
+              <div className="customer-cart-footer">
+
+                <div className="customer-cart-total">
+
+                  <span>
+                    Total Amount
+                  </span>
+
+                  <strong>
+                    ₹{cartTotal.toFixed(2)}
+                  </strong>
+
+                </div>
+
+                <button
+                  className="btn btn-primary customer-place-order"
+                  onClick={placeOrder}
+                  disabled={
+                    cart.length === 0 ||
+                    placingOrder
+                  }
+                >
+                  {placingOrder
+                    ? "Placing Order..."
+                    : "Place Order"}
+                </button>
+
+              </div>
+
+            </section>
+
+
+            {/* =================================================
+                CATEGORY TABS
+            ================================================= */}
+
             <div className="customer-category-tabs">
+
               <button
                 className={
                   activeCategory === "all"
@@ -1025,280 +1270,150 @@ function CustomerMenu() {
                   </button>
                 )
               )}
+
             </div>
 
-            <div className="customer-menu-layout">
 
-              {/* =================================================
-                  MENU LIST
-              ================================================= */}
+            {/* =================================================
+                MENU LIST
+            ================================================= */}
 
-              <section className="customer-menu-list">
-                {filteredItems.length === 0 ? (
-                  <div className="customer-empty-state">
-                    <h3>
-                      No dishes available
-                    </h3>
+            <section className="customer-menu-list">
 
-                    <p>
-                      Please check another category.
-                    </p>
-                  </div>
-                ) : (
-                  filteredItems.map(
-                    (item) => (
-                      <article
-                        className="customer-menu-card"
-                        key={item.id}
-                      >
+              {filteredItems.length === 0 ? (
 
-                        {/* IMAGE */}
+                <div className="customer-empty-state">
 
-                        <div className="customer-menu-image">
-                          {item.imageUrl ? (
-                            <img
-                              src={getImageUrl(
-                                item.imageUrl
-                              )}
-                              alt={item.name}
-                              onError={(event) => {
-                                event.currentTarget.style.display =
-                                  "none";
+                  <h3>
+                    No dishes available
+                  </h3>
 
-                                const parent =
-                                  event.currentTarget
-                                    .parentElement;
+                  <p>
+                    Please check another category.
+                  </p>
 
-                                if (parent) {
-                                  parent.innerHTML =
-                                    `<div class="customer-no-image">🍽️</div>`;
-                                }
-                              }}
-                            />
-                          ) : (
-                            <div className="customer-no-image">
-                              🍽️
-                            </div>
-                          )}
-                        </div>
-
-                        {/* CONTENT */}
-
-                        <div className="customer-menu-card-content">
-                          <div className="customer-menu-card-top">
-                            <div>
-                              <span className="customer-menu-category">
-                                {item.categoryName}
-                              </span>
-
-                              <h3>
-                                {item.name}
-                              </h3>
-                            </div>
-
-                            <strong className="customer-menu-price">
-                              ₹
-                              {Number(
-                                item.price
-                              ).toFixed(2)}
-                            </strong>
-                          </div>
-
-                          {item.description && (
-                            <p>
-                              {item.description}
-                            </p>
-                          )}
-
-                          <div className="customer-menu-card-bottom">
-                            <span className="customer-preparation-time">
-                              ⏱{" "}
-                              {item.preparationTimeMinutes}
-                              {" "}
-                              min
-                            </span>
-
-                            <span className="customer-availability">
-                              Available
-                            </span>
-
-                            <button
-                              className="btn btn-primary customer-add-button"
-                              onClick={() =>
-                                addToCart(item)
-                              }
-                              disabled={
-                                !item.available ||
-                                !item.active
-                              }
-                            >
-                              + Add
-                            </button>
-                          </div>
-                        </div>
-                      </article>
-                    )
-                  )
-                )}
-              </section>
-
-              {/* =================================================
-                  CART
-              ================================================= */}
-
-              <aside className="customer-cart">
-                <div className="customer-cart-header">
-                  <div>
-                    <span className="eyebrow">
-                      YOUR ORDER
-                    </span>
-
-                    <h2>
-                      Cart
-                    </h2>
-                  </div>
-
-                  <strong>
-                    {cartCount} items
-                  </strong>
                 </div>
 
-                {cart.length === 0 ? (
-                  <div className="customer-cart-empty">
-                    <div>
-                      🛒
-                    </div>
+              ) : (
 
-                    <h3>
-                      Your cart is empty
-                    </h3>
+                filteredItems.map(
+                  (item) => (
+                    <article
+                      className="customer-menu-card"
+                      key={item.id}
+                    >
 
-                    <p>
-                      Add dishes from the menu.
-                    </p>
-                  </div>
-                ) : (
-                  <div className="customer-cart-items">
-                    {cart.map(
-                      (item) => (
-                        <div
-                          className="customer-cart-item"
-                          key={item.menuItemId}
-                        >
-                          <div className="customer-cart-item-header">
-                            <div>
-                              <h4>
-                                {item.menuItemName}
-                              </h4>
+                      {/* IMAGE */}
 
-                              <span>
-                                ₹
-                                {Number(
-                                  item.unitPrice
-                                ).toFixed(2)}
-                              </span>
-                            </div>
+                      <div className="customer-menu-image">
 
-                            <button
-                              className="customer-remove-button"
-                              onClick={() =>
-                                removeFromCart(
-                                  item.menuItemId
-                                )
+                        {item.imageUrl ? (
+
+                          <img
+                            src={getImageUrl(
+                              item.imageUrl
+                            )}
+                            alt={item.name}
+                            onError={(event) => {
+                              event.currentTarget.style.display =
+                                "none";
+
+                              const parent =
+                                event.currentTarget
+                                  .parentElement;
+
+                              if (parent) {
+                                parent.innerHTML =
+                                  `<div class="customer-no-image">🍽️</div>`;
                               }
-                              title="Remove item"
-                            >
-                              ×
-                            </button>
-                          </div>
-
-                          <div className="customer-quantity-row">
-                            <button
-                              onClick={() =>
-                                updateQuantity(
-                                  item.menuItemId,
-                                  item.quantity - 1
-                                )
-                              }
-                            >
-                              −
-                            </button>
-
-                            <span>
-                              {item.quantity}
-                            </span>
-
-                            <button
-                              onClick={() =>
-                                updateQuantity(
-                                  item.menuItemId,
-                                  item.quantity + 1
-                                )
-                              }
-                            >
-                              +
-                            </button>
-
-                            <strong>
-                              ₹
-                              {(
-                                Number(
-                                  item.unitPrice
-                                ) *
-                                item.quantity
-                              ).toFixed(2)}
-                            </strong>
-                          </div>
-
-                          <textarea
-                            placeholder="Special instruction"
-                            value={
-                              item.specialInstruction
-                            }
-                            onChange={(event) =>
-                              updateInstruction(
-                                item.menuItemId,
-                                event.target.value
-                              )
-                            }
-                            rows={2}
+                            }}
                           />
+
+                        ) : (
+
+                          <div className="customer-no-image">
+                            🍽️
+                          </div>
+
+                        )}
+
+                      </div>
+
+
+                      {/* CONTENT */}
+
+                      <div className="customer-menu-card-content">
+
+                        <div className="customer-menu-card-top">
+
+                          <div>
+
+                            <span className="customer-menu-category">
+                              {item.categoryName}
+                            </span>
+
+                            <h3>
+                              {item.name}
+                            </h3>
+
+                          </div>
+
+                          <strong className="customer-menu-price">
+                            ₹
+                            {Number(
+                              item.price
+                            ).toFixed(2)}
+                          </strong>
+
                         </div>
-                      )
-                    )}
-                  </div>
-                )}
 
-                <div className="customer-cart-footer">
-                  <div className="customer-cart-total">
-                    <span>
-                      Total
-                    </span>
+                        {item.description && (
+                          <p>
+                            {item.description}
+                          </p>
+                        )}
 
-                    <strong>
-                      ₹{cartTotal.toFixed(2)}
-                    </strong>
-                  </div>
+                        <div className="customer-menu-card-bottom">
 
-                  <button
-                    className="btn btn-primary customer-place-order"
-                    onClick={
-                      placeOrder
-                    }
-                    disabled={
-                      cart.length === 0 ||
-                      placingOrder
-                    }
-                  >
-                    {placingOrder
-                      ? "Placing Order..."
-                      : "Place Order"}
-                  </button>
-                </div>
-              </aside>
-            </div>
+                          <span className="customer-preparation-time">
+                            ⏱{" "}
+                            {item.preparationTimeMinutes}
+                            {" "}
+                            min
+                          </span>
+
+                          <span className="customer-availability">
+                            Available
+                          </span>
+
+                          <button
+                            className="btn btn-primary customer-add-button"
+                            onClick={() =>
+                              addToCart(item)
+                            }
+                            disabled={
+                              !item.available ||
+                              !item.active
+                            }
+                          >
+                            + Add
+                          </button>
+
+                        </div>
+
+                      </div>
+
+                    </article>
+                  )
+                )
+
+              )}
+
+            </section>
+
           </>
         )}
+
       </main>
     </div>
   );
