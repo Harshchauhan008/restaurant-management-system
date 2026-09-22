@@ -10,11 +10,15 @@ function AdminLayout() {
   // =====================================================
 
   useEffect(() => {
-    const adminToken = localStorage.getItem("adminToken");
-    const role = localStorage.getItem("role");
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("token");
+
+    const role =
+      localStorage.getItem("role")?.toUpperCase();
 
     // No admin login -> go to login
-    if (!adminToken || role !== "ADMIN") {
+    if (!token || role !== "ADMIN") {
       navigate("/login", { replace: true });
     }
   }, [navigate]);
@@ -24,11 +28,15 @@ function AdminLayout() {
   };
 
   // =====================================================
-  // ALSO PREVENT CONTENT FROM FLASHING BEFORE CHECK
+  // PREVENT CONTENT FROM FLASHING BEFORE CHECK
   // =====================================================
 
-  const adminToken = localStorage.getItem("adminToken");
-  const role = localStorage.getItem("role");
+  const adminToken =
+    localStorage.getItem("adminToken") ||
+    localStorage.getItem("token");
+
+  const role =
+    localStorage.getItem("role")?.toUpperCase();
 
   if (!adminToken || role !== "ADMIN") {
     return null;
@@ -36,7 +44,6 @@ function AdminLayout() {
 
   return (
     <div className="admin-dashboard">
-
       <style>
         {`
           * {
@@ -165,7 +172,6 @@ function AdminLayout() {
           ================================================= */
 
           @media (max-width: 800px) {
-
             .admin-sidebar {
               display: none;
             }
