@@ -1074,78 +1074,288 @@ function AdminDashboard() {
             }
           }
 
-          /* =================================================
-             RESPONSIVE
-          ================================================= */
+         /* =================================================
+   RESPONSIVE
+================================================= */
 
-          @media (max-width: 1100px) {
+@media (max-width: 1100px) {
 
-            .admin-stats {
-              grid-template-columns:
-                repeat(2, minmax(0, 1fr));
-            }
+  .admin-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
-            .admin-overview {
-              grid-template-columns:
-                1fr;
-            }
+  .admin-overview {
+    grid-template-columns: 1fr;
+  }
 
-            .admin-review-qr-body {
-              flex-direction: column;
-              align-items: flex-start;
-            }
+  .admin-review-qr-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-            .admin-review-qr-preview {
-              align-self: center;
-            }
+  .admin-review-qr-preview {
+    align-self: center;
+  }
+}
 
-          }
 
-          @media (max-width: 650px) {
+/* =================================================
+   MOBILE
+================================================= */
 
-            .admin-topbar {
-              align-items: flex-start;
-              flex-direction: column;
-            }
+@media (max-width: 650px) {
 
-            .admin-topbar-actions {
-              width: 100%;
-              display: grid;
-              grid-template-columns:
-                repeat(
-                  2,
-                  minmax(0, 1fr)
-                );
-            }
+  .admin-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
 
-            .admin-refresh-button,
-            .admin-logout-button {
-              width: 100%;
-            }
+  .admin-topbar h1 {
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
 
-            .admin-review-qr-body {
-              padding: 20px;
-            }
+  .admin-topbar p {
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
 
-            .admin-review-card {
-              flex-direction: column;
-            }
+  .admin-topbar-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
 
-            .admin-review-photo {
-              width: 100%;
-              height: 220px;
-            }
+  .admin-refresh-button,
+  .admin-logout-button {
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 10px;
+    font-size: 0.78rem;
+  }
 
-            .admin-review-top {
-              flex-direction: column;
-            }
 
-            .admin-delete-review {
-              width: 100%;
-            }
+  /* =========================
+     STATISTICS
+  ========================= */
 
-          }
+  .admin-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
 
+  .admin-stat-card {
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  .admin-stat-label {
+    font-size: 0.65rem;
+  }
+
+  .admin-stat-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .admin-stat-value {
+    margin-top: 10px;
+    font-size: 1.65rem;
+  }
+
+  .admin-stat-description {
+    font-size: 0.68rem;
+    line-height: 1.35;
+  }
+
+
+  /* =========================
+     OVERVIEW
+  ========================= */
+
+  .admin-overview {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .admin-panel-header {
+    padding: 15px;
+    gap: 8px;
+  }
+
+  .admin-panel-header h2 {
+    font-size: 1rem;
+  }
+
+  .admin-panel-header span {
+    font-size: 0.68rem;
+  }
+
+  .admin-panel-body {
+    padding: 15px;
+  }
+
+  .admin-occupancy-number {
+    font-size: 2rem;
+  }
+
+  .admin-occupancy-text {
+    font-size: 0.75rem;
+  }
+
+  .admin-info-row {
+    gap: 10px;
+    padding-bottom: 11px;
+  }
+
+  .admin-info-label,
+  .admin-info-value {
+    font-size: 0.76rem;
+  }
+
+
+  /* =========================
+     REVIEW QR
+  ========================= */
+
+  .admin-review-qr-section,
+  .admin-reviews-section {
+    margin-top: 18px;
+    margin-bottom: 18px;
+  }
+
+  .admin-review-qr-body {
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .admin-review-qr-info h3 {
+    font-size: 1.15rem;
+  }
+
+  .admin-review-qr-info p {
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .admin-review-url {
+    width: 100%;
+    font-size: 0.7rem;
+    padding: 9px 10px;
+  }
+
+  .admin-review-qr-download {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.78rem;
+  }
+
+  .admin-review-qr-preview {
+    align-self: center;
+    padding: 10px;
+  }
+
+  .admin-review-qr-preview canvas {
+    width: 180px !important;
+    height: 180px !important;
+  }
+
+
+  /* =========================
+     REVIEWS
+  ========================= */
+
+  .admin-reviews-body {
+    padding: 15px;
+  }
+
+  .admin-review-card {
+    flex-direction: column;
+    gap: 13px;
+    padding: 13px;
+  }
+
+  .admin-review-photo {
+    width: 100%;
+    height: 180px;
+  }
+
+  .admin-review-top {
+    flex-direction: column;
+  }
+
+  .admin-review-customer {
+    font-size: 0.9rem;
+  }
+
+  .admin-review-date {
+    font-size: 0.68rem;
+  }
+
+  .admin-review-rating {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  .admin-review-text {
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .admin-review-status {
+    font-size: 0.62rem;
+  }
+
+  .admin-delete-review {
+    width: 100%;
+    padding: 9px;
+  }
+
+
+  /* =========================
+     ERROR
+  ========================= */
+
+  .admin-error {
+    padding: 14px;
+    font-size: 0.78rem;
+  }
+}
+
+
+/* =================================================
+   VERY SMALL PHONES
+================================================= */
+
+@media (max-width: 400px) {
+
+  .admin-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-topbar-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-topbar h1 {
+    font-size: 1.6rem;
+  }
+
+  .admin-stat-card {
+    padding: 14px;
+  }
+
+  .admin-review-qr-preview canvas {
+    width: 160px !important;
+    height: 160px !important;
+  }
+}
           @media (max-width: 560px) {
 
             .admin-stats {

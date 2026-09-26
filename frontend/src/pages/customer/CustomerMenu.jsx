@@ -519,6 +519,41 @@ function CustomerMenu() {
   ) {
     return (
       <div className="customer-menu-page">
+        <style>
+          {`
+            .customer-menu-page {
+              width: 100%;
+              min-height: 100vh;
+              overflow-x: hidden;
+            }
+
+            .customer-menu-loading {
+              width: 100%;
+              min-height: 100vh;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              padding: 24px;
+              text-align: center;
+            }
+
+            @media (max-width: 500px) {
+              .customer-menu-loading {
+                padding: 20px 16px;
+              }
+
+              .customer-menu-loading h2 {
+                font-size: 1.3rem;
+              }
+
+              .customer-menu-loading p {
+                font-size: 0.9rem;
+              }
+            }
+          `}
+        </style>
+
         <div className="customer-menu-loading">
           <div className="customer-menu-spinner"></div>
 
@@ -541,6 +576,46 @@ function CustomerMenu() {
   if (error && !table) {
     return (
       <div className="customer-menu-page">
+        <style>
+          {`
+            .customer-menu-page {
+              width: 100%;
+              min-height: 100vh;
+              overflow-x: hidden;
+            }
+
+            .customer-menu-error {
+              width: 100%;
+              min-height: 100vh;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              padding: 24px;
+              text-align: center;
+            }
+
+            .customer-menu-error p {
+              max-width: 500px;
+              overflow-wrap: anywhere;
+            }
+
+            @media (max-width: 500px) {
+              .customer-menu-error {
+                padding: 20px 16px;
+              }
+
+              .customer-menu-error h2 {
+                font-size: 1.3rem;
+              }
+
+              .customer-menu-error p {
+                font-size: 0.9rem;
+              }
+            }
+          `}
+        </style>
+
         <div className="customer-menu-error">
           <div className="customer-menu-error-icon">
             ⚠️
@@ -571,6 +646,616 @@ function CustomerMenu() {
     <div className="customer-menu-page">
 
       {/* =================================================
+          RESPONSIVE CSS
+      ================================================= */}
+
+      <style>
+        {`
+          /* =================================================
+             BASE RESPONSIVE SAFETY
+          ================================================= */
+
+          .customer-menu-page {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+          }
+
+          .customer-menu-header {
+            width: 100%;
+          }
+
+          .customer-menu-header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+          }
+
+          .customer-menu-header-inner > div:first-child {
+            min-width: 0;
+          }
+
+          .customer-menu-header h1 {
+            overflow-wrap: anywhere;
+          }
+
+          .customer-table-info {
+            overflow-wrap: anywhere;
+          }
+
+          .customer-cart-summary {
+            flex-shrink: 0;
+          }
+
+          .customer-menu-main {
+            width: 100%;
+            min-width: 0;
+          }
+
+          /* =================================================
+             CART
+          ================================================= */
+
+          .customer-cart {
+            width: 100%;
+            min-width: 0;
+          }
+
+          .customer-cart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+          }
+
+          .customer-cart-header > div {
+            min-width: 0;
+          }
+
+          .customer-cart-items {
+            width: 100%;
+            min-width: 0;
+          }
+
+          .customer-cart-item {
+            width: 100%;
+            min-width: 0;
+          }
+
+          .customer-cart-item-main {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+          }
+
+          .customer-cart-item-info {
+            min-width: 0;
+          }
+
+          .customer-cart-item-info h4 {
+            overflow-wrap: anywhere;
+          }
+
+          .customer-cart-item-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+          }
+
+          .customer-cart-item-total {
+            flex-shrink: 0;
+            white-space: nowrap;
+          }
+
+          .customer-cart-item textarea {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+          }
+
+          .customer-cart-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+          }
+
+          .customer-cart-total {
+            min-width: 0;
+          }
+
+          .customer-place-order {
+            flex-shrink: 0;
+          }
+
+          /* =================================================
+             CATEGORY TABS
+          ================================================= */
+
+          .customer-category-tabs {
+            width: 100%;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+          }
+
+          .customer-category-tabs::-webkit-scrollbar {
+            height: 4px;
+          }
+
+          .customer-tab {
+            flex-shrink: 0;
+            white-space: nowrap;
+          }
+
+          /* =================================================
+             MENU LIST
+          ================================================= */
+
+          .customer-menu-list {
+            width: 100%;
+            min-width: 0;
+          }
+
+          .customer-menu-card {
+            width: 100%;
+            min-width: 0;
+            display: flex;
+          }
+
+          .customer-menu-image {
+            flex-shrink: 0;
+            overflow: hidden;
+          }
+
+          .customer-menu-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+          }
+
+          .customer-menu-card-content {
+            min-width: 0;
+            flex: 1;
+          }
+
+          .customer-menu-card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+          }
+
+          .customer-menu-card-top > div {
+            min-width: 0;
+          }
+
+          .customer-menu-card-top h3 {
+            overflow-wrap: anywhere;
+          }
+
+          .customer-menu-price {
+            flex-shrink: 0;
+            white-space: nowrap;
+          }
+
+          .customer-menu-card-content p {
+            overflow-wrap: anywhere;
+          }
+
+          .customer-menu-card-bottom {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+          }
+
+          .customer-preparation-time,
+          .customer-availability {
+            white-space: nowrap;
+          }
+
+          .customer-add-button {
+            margin-left: auto;
+            flex-shrink: 0;
+          }
+
+          /* =================================================
+             ORDER CONFIRMATION
+          ================================================= */
+
+          .customer-order-confirmation {
+            width: 100%;
+            min-width: 0;
+          }
+
+          .customer-confirmation-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+          }
+
+          .customer-confirmation-top > div:last-child {
+            min-width: 0;
+          }
+
+          .customer-confirmation-top h2,
+          .customer-confirmation-top p {
+            overflow-wrap: anywhere;
+          }
+
+          .customer-order-info-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+          }
+
+          .customer-order-info-card {
+            min-width: 0;
+          }
+
+          .customer-order-info-card strong {
+            overflow-wrap: anywhere;
+          }
+
+          .customer-confirmation-items {
+            width: 100%;
+            min-width: 0;
+          }
+
+          .customer-confirmation-items-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 15px;
+          }
+
+          .customer-confirmation-items-header > div {
+            min-width: 0;
+          }
+
+          .customer-confirmation-items-header h3 {
+            overflow-wrap: anywhere;
+          }
+
+          .customer-receipt {
+            width: 100%;
+            min-width: 0;
+          }
+
+          .customer-receipt-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+          }
+
+          .customer-receipt-item-left {
+            min-width: 0;
+          }
+
+          .customer-receipt-item-left strong,
+          .customer-receipt-item-left span,
+          .customer-receipt-item-left small {
+            overflow-wrap: anywhere;
+          }
+
+          .customer-receipt-item-price {
+            flex-shrink: 0;
+            white-space: nowrap;
+          }
+
+          .customer-receipt-subtotal,
+          .customer-receipt-total {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+          }
+
+          .customer-new-order-button {
+            width: 100%;
+          }
+
+          /* =================================================
+             SESSION MODAL
+          ================================================= */
+
+          .customer-session-modal-content {
+            width: 100%;
+            max-width: 460px;
+            padding: 36px;
+            background: #211b18;
+            border: 1px solid var(--accent-border);
+            border-radius: 18px;
+            box-shadow:
+              0 25px 80px rgba(0, 0, 0, 0.6);
+            box-sizing: border-box;
+          }
+
+          .customer-session-modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+          }
+
+          .customer-session-modal-buttons button {
+            min-width: 0;
+          }
+
+          /* =================================================
+             TABLET
+          ================================================= */
+
+          @media (max-width: 900px) {
+
+            .customer-order-info-grid {
+              grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+            }
+          }
+
+          /* =================================================
+             MOBILE
+          ================================================= */
+
+          @media (max-width: 700px) {
+
+            .customer-menu-header-inner {
+              align-items: flex-start;
+              flex-direction: column;
+              gap: 16px;
+            }
+
+            .customer-cart-summary {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            }
+
+            .customer-order-info-grid {
+              grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+            }
+
+            /* Menu cards become vertical */
+
+            .customer-menu-card {
+              flex-direction: column;
+            }
+
+            .customer-menu-image {
+              width: 100%;
+              height: 220px;
+            }
+
+            .customer-menu-card-content {
+              width: 100%;
+            }
+
+            .customer-menu-card-bottom {
+              align-items: center;
+            }
+
+            .customer-add-button {
+              margin-left: auto;
+            }
+
+            /* Cart */
+
+            .customer-cart-footer {
+              flex-direction: column;
+              align-items: stretch;
+            }
+
+            .customer-cart-total {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            }
+
+            .customer-place-order {
+              width: 100%;
+            }
+
+            /* Confirmation */
+
+            .customer-confirmation-top {
+              gap: 12px;
+            }
+          }
+
+          /* =================================================
+             SMALL MOBILE
+          ================================================= */
+
+          @media (max-width: 500px) {
+
+            .customer-menu-page {
+              font-size: 0.95rem;
+            }
+
+            .customer-menu-header-inner {
+              padding-left: 16px;
+              padding-right: 16px;
+            }
+
+            .customer-menu-main {
+              padding-left: 16px;
+              padding-right: 16px;
+            }
+
+            /* Header */
+
+            .customer-menu-header h1 {
+              font-size: 1.7rem;
+            }
+
+            .customer-table-info {
+              font-size: 0.85rem;
+            }
+
+            .customer-cart-summary {
+              font-size: 0.9rem;
+            }
+
+            /* Menu image */
+
+            .customer-menu-image {
+              height: 190px;
+            }
+
+            /* Menu card */
+
+            .customer-menu-card-top {
+              gap: 10px;
+            }
+
+            .customer-menu-card-top h3 {
+              font-size: 1.15rem;
+            }
+
+            .customer-menu-price {
+              font-size: 1rem;
+            }
+
+            .customer-menu-card-bottom {
+              gap: 8px;
+            }
+
+            .customer-add-button {
+              width: 100%;
+              margin-left: 0;
+            }
+
+            /* Cart */
+
+            .customer-cart-header {
+              align-items: flex-start;
+            }
+
+            .customer-cart-item-bottom {
+              align-items: center;
+            }
+
+            .customer-cart-item-total {
+              font-size: 0.95rem;
+            }
+
+            /* Confirmation */
+
+            .customer-confirmation-top {
+              flex-direction: column;
+            }
+
+            .customer-order-info-grid {
+              grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+              gap: 8px;
+            }
+
+            .customer-order-info-card {
+              padding: 14px;
+            }
+
+            .customer-order-info-card strong {
+              font-size: 0.95rem;
+            }
+
+            .customer-confirmation-items-header {
+              align-items: flex-start;
+              flex-direction: column;
+            }
+
+            .customer-receipt-item {
+              gap: 10px;
+            }
+
+            /* Session modal */
+
+            .customer-session-modal-content {
+              padding: 24px;
+              border-radius: 14px;
+            }
+
+            .customer-session-modal-content h2 {
+              font-size: 1.35rem;
+            }
+
+            .customer-session-modal-buttons {
+              flex-direction: column;
+            }
+
+            .customer-session-modal-buttons button {
+              width: 100%;
+            }
+          }
+
+          /* =================================================
+             VERY SMALL PHONES
+          ================================================= */
+
+          @media (max-width: 380px) {
+
+            .customer-menu-header-inner,
+            .customer-menu-main {
+              padding-left: 12px;
+              padding-right: 12px;
+            }
+
+            .customer-menu-header h1 {
+              font-size: 1.5rem;
+            }
+
+            .customer-menu-image {
+              height: 165px;
+            }
+
+            .customer-menu-card-top {
+              flex-direction: column;
+            }
+
+            .customer-menu-price {
+              align-self: flex-start;
+            }
+
+            .customer-cart-item-main {
+              gap: 8px;
+            }
+
+            .customer-quantity-row button {
+              width: 30px;
+              height: 30px;
+            }
+
+            .customer-order-info-grid {
+              grid-template-columns: 1fr;
+            }
+
+            .customer-receipt-item {
+              flex-direction: column;
+              gap: 6px;
+            }
+
+            .customer-receipt-item-price {
+              align-self: flex-end;
+            }
+
+            .customer-session-modal-content {
+              padding: 20px;
+            }
+          }
+        `}
+      </style>
+
+      {/* =================================================
           SESSION CODE MODAL
       ================================================= */}
 
@@ -590,19 +1275,8 @@ function CustomerMenu() {
               "blur(8px)",
           }}
         >
-          <div
-            style={{
-              width: "100%",
-              maxWidth: "460px",
-              padding: "36px",
-              background: "#211b18",
-              border:
-                "1px solid var(--accent-border)",
-              borderRadius: "18px",
-              boxShadow:
-                "0 25px 80px rgba(0, 0, 0, 0.6)",
-            }}
-          >
+          <div className="customer-session-modal-content">
+
             <span className="eyebrow">
               ACTIVE SESSION
             </span>
@@ -683,13 +1357,8 @@ function CustomerMenu() {
               </p>
             )}
 
-            <div
-              style={{
-                display: "flex",
-                gap: "12px",
-                marginTop: "25px",
-              }}
-            >
+            <div className="customer-session-modal-buttons">
+
               <button
                 type="button"
                 onClick={
@@ -733,6 +1402,7 @@ function CustomerMenu() {
                   ? "Placing..."
                   : "Continue"}
               </button>
+
             </div>
           </div>
         </div>
@@ -743,9 +1413,11 @@ function CustomerMenu() {
       ================================================= */}
 
       <header className="customer-menu-header">
+
         <div className="container customer-menu-header-inner">
 
           <div>
+
             <span className="eyebrow">
               Restaurant
             </span>
@@ -763,9 +1435,11 @@ function CustomerMenu() {
                 {table.location}
               </p>
             )}
+
           </div>
 
           <div className="customer-cart-summary">
+
             <span>
               🛒 {cartCount}
             </span>
@@ -773,9 +1447,11 @@ function CustomerMenu() {
             <strong>
               ₹{cartTotal.toFixed(2)}
             </strong>
+
           </div>
 
         </div>
+
       </header>
 
       {/* =================================================
@@ -804,6 +1480,7 @@ function CustomerMenu() {
               </div>
 
               <div>
+
                 <span className="eyebrow">
                   ORDER PLACED
                 </span>
@@ -816,6 +1493,7 @@ function CustomerMenu() {
                   Your order has been sent
                   to our kitchen.
                 </p>
+
               </div>
 
             </div>
@@ -825,6 +1503,7 @@ function CustomerMenu() {
             <div className="customer-order-info-grid">
 
               <div className="customer-order-info-card">
+
                 <span>
                   ORDER NUMBER
                 </span>
@@ -832,9 +1511,11 @@ function CustomerMenu() {
                 <strong>
                   {orderSuccess.orderNumber}
                 </strong>
+
               </div>
 
               <div className="customer-order-info-card">
+
                 <span>
                   TABLE
                 </span>
@@ -842,9 +1523,11 @@ function CustomerMenu() {
                 <strong>
                   {orderSuccess.tableNumber}
                 </strong>
+
               </div>
 
               <div className="customer-order-info-card">
+
                 <span>
                   STATUS
                 </span>
@@ -852,9 +1535,11 @@ function CustomerMenu() {
                 <strong className="customer-order-status">
                   {orderSuccess.status}
                 </strong>
+
               </div>
 
               <div className="customer-order-info-card">
+
                 <span>
                   TOTAL
                 </span>
@@ -865,6 +1550,7 @@ function CustomerMenu() {
                     orderSuccess.totalAmount
                   ).toFixed(2)}
                 </strong>
+
               </div>
 
             </div>
@@ -879,6 +1565,7 @@ function CustomerMenu() {
                   textAlign: "center",
                 }}
               >
+
                 <span>
                   SESSION CODE
                 </span>
@@ -907,6 +1594,7 @@ function CustomerMenu() {
                   Keep this code to place
                   another order from this table.
                 </small>
+
               </div>
             )}
 
@@ -919,6 +1607,7 @@ function CustomerMenu() {
               <div className="customer-confirmation-items-header">
 
                 <div>
+
                   <span className="eyebrow">
                     ORDER SUMMARY
                   </span>
@@ -926,6 +1615,7 @@ function CustomerMenu() {
                   <h3>
                     Items Ordered
                   </h3>
+
                 </div>
 
                 <span>
@@ -1048,6 +1738,7 @@ function CustomerMenu() {
               <div className="customer-cart-header">
 
                 <div>
+
                   <span className="eyebrow">
                     YOUR ORDER
                   </span>
@@ -1055,6 +1746,7 @@ function CustomerMenu() {
                   <h2>
                     Cart
                   </h2>
+
                 </div>
 
                 <strong>
@@ -1075,6 +1767,7 @@ function CustomerMenu() {
                   </div>
 
                   <div>
+
                     <h3>
                       Your cart is empty
                     </h3>
@@ -1082,6 +1775,7 @@ function CustomerMenu() {
                     <p>
                       Add dishes from the menu below.
                     </p>
+
                   </div>
 
                 </div>
@@ -1228,7 +1922,6 @@ function CustomerMenu() {
 
             </section>
 
-
             {/* =================================================
                 CATEGORY TABS
             ================================================= */}
@@ -1272,7 +1965,6 @@ function CustomerMenu() {
               )}
 
             </div>
-
 
             {/* =================================================
                 MENU LIST
@@ -1338,7 +2030,6 @@ function CustomerMenu() {
                         )}
 
                       </div>
-
 
                       {/* CONTENT */}
 

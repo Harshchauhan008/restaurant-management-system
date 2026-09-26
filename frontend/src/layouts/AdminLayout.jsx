@@ -1,9 +1,11 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function AdminLayout() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // =====================================================
   // ADMIN AUTHENTICATION CHECK
@@ -22,6 +24,14 @@ function AdminLayout() {
       navigate("/login", { replace: true });
     }
   }, [navigate]);
+
+  // =====================================================
+  // CLOSE SIDEBAR WHEN ROUTE CHANGES
+  // =====================================================
+
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
 
   const isActive = (path) => {
     return location.pathname === path;
@@ -44,6 +54,7 @@ function AdminLayout() {
 
   return (
     <div className="admin-dashboard">
+
       <style>
         {`
           * {
@@ -79,6 +90,7 @@ function AdminLayout() {
           ================================================= */
 
           .admin-sidebar {
+            position: relative;
             width: 250px;
             flex-shrink: 0;
             min-height: 100vh;
@@ -168,16 +180,188 @@ function AdminLayout() {
           }
 
           /* =================================================
-             RESPONSIVE
+             MOBILE HEADER
+          ================================================= */
+
+          .admin-mobile-header {
+            display: none;
+          }
+
+          .admin-sidebar-overlay {
+            display: none;
+          }
+
+          .admin-sidebar-close {
+            display: none;
+          }
+
+          /* =================================================
+             MOBILE SIDEBAR
           ================================================= */
 
           @media (max-width: 800px) {
+
+            .admin-shell {
+              display: block;
+            }
+
+            .admin-mobile-header {
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              width: 100%;
+              height: 64px;
+              padding: 0 16px;
+              background: #211b18;
+              border-bottom: 1px solid rgba(255,255,255,0.08);
+              position: sticky;
+              top: 0;
+              z-index: 900;
+            }
+
+            .admin-mobile-menu-button {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 42px;
+              height: 42px;
+              padding: 0;
+              border: 1px solid rgba(201,123,74,0.25);
+              border-radius: 9px;
+              background: rgba(201,123,74,0.10);
+              color: #e3a16f;
+              font-size: 1.35rem;
+              cursor: pointer;
+            }
+
+            .admin-mobile-title {
+              flex: 1;
+              color: #fffaf5;
+              font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+              font-size: 1.15rem;
+              font-weight: 600;
+            }
+
+            /* Sidebar becomes drawer */
+
             .admin-sidebar {
-              display: none;
+              position: fixed;
+              top: 0;
+              left: 0;
+              z-index: 1000;
+
+              width: 270px;
+              height: 100vh;
+              min-height: 100vh;
+
+              padding: 22px 18px;
+
+              transform: translateX(-100%);
+              transition: transform 0.25s ease;
+
+              box-shadow:
+                12px 0 35px rgba(0,0,0,0.35);
+
+              overflow-y: auto;
+            }
+
+            .admin-sidebar.open {
+              transform: translateX(0);
+            }
+
+            /* Dark background behind sidebar */
+
+            .admin-sidebar-overlay {
+              position: fixed;
+              inset: 0;
+              z-index: 999;
+
+              display: block;
+
+              background: rgba(0,0,0,0.55);
+
+              opacity: 0;
+              visibility: hidden;
+              pointer-events: none;
+
+              transition:
+                opacity 0.25s ease,
+                visibility 0.25s ease;
+            }
+
+            .admin-sidebar-overlay.open {
+              opacity: 1;
+              visibility: visible;
+              pointer-events: auto;
+            }
+
+            /* Close button */
+
+            .admin-sidebar-close {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              position: absolute;
+              top: 18px;
+              right: 15px;
+
+              width: 34px;
+              height: 34px;
+
+              padding: 0;
+
+              border: 1px solid rgba(255,255,255,0.08);
+              border-radius: 8px;
+
+              background: rgba(255,255,255,0.05);
+              color: #bcb0a8;
+
+              font-size: 1.2rem;
+              cursor: pointer;
+            }
+
+            .admin-brand {
+              padding-right: 45px;
             }
 
             .admin-main {
-              padding: 22px;
+              width: 100%;
+              min-width: 0;
+              padding: 18px 16px;
+            }
+          }
+
+          /* =================================================
+             VERY SMALL PHONES
+          ================================================= */
+
+          @media (max-width: 400px) {
+
+            .admin-mobile-header {
+              height: 58px;
+              padding: 0 12px;
+            }
+
+            .admin-mobile-menu-button {
+              width: 38px;
+              height: 38px;
+              font-size: 1.2rem;
+            }
+
+            .admin-mobile-title {
+              font-size: 1rem;
+            }
+
+            .admin-sidebar {
+              width: 260px;
+            }
+
+            .admin-main {
+              padding: 14px 12px;
             }
           }
         `}
@@ -186,10 +370,46 @@ function AdminLayout() {
       <div className="admin-shell">
 
         {/* =================================================
+            MOBILE HEADER
+        ================================================= */}
+
+        <header className="admin-mobile-header">
+
+          <button
+            type="button"
+            className="admin-mobile-menu-button"
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open menu"
+          >
+            ☰
+          </button>
+
+          <div className="admin-mobile-title">
+            Admin Panel
+          </div>
+
+        </header>
+
+        {/* =================================================
             SIDEBAR
         ================================================= */}
 
-        <aside className="admin-sidebar">
+        <aside
+          className={`admin-sidebar ${
+            sidebarOpen ? "open" : ""
+          }`}
+        >
+
+          {/* CLOSE BUTTON */}
+
+          <button
+            type="button"
+            className="admin-sidebar-close"
+            onClick={() => setSidebarOpen(false)}
+            aria-label="Close menu"
+          >
+            ×
+          </button>
 
           <div className="admin-brand">
 
@@ -224,9 +444,10 @@ function AdminLayout() {
                     : ""
                 }`
               }
-              onClick={() =>
-                navigate("/admin")
-              }
+              onClick={() => {
+                navigate("/admin");
+                setSidebarOpen(false);
+              }}
             >
               <span className="admin-nav-icon">
                 ◈
@@ -246,9 +467,10 @@ function AdminLayout() {
                     : ""
                 }`
               }
-              onClick={() =>
-                navigate("/admin/tables")
-              }
+              onClick={() => {
+                navigate("/admin/tables");
+                setSidebarOpen(false);
+              }}
             >
               <span className="admin-nav-icon">
                 ◫
@@ -268,9 +490,10 @@ function AdminLayout() {
                     : ""
                 }`
               }
-              onClick={() =>
-                navigate("/admin/orders")
-              }
+              onClick={() => {
+                navigate("/admin/orders");
+                setSidebarOpen(false);
+              }}
             >
               <span className="admin-nav-icon">
                 ◴
@@ -290,9 +513,10 @@ function AdminLayout() {
                     : ""
                 }`
               }
-              onClick={() =>
-                navigate("/admin/billing")
-              }
+              onClick={() => {
+                navigate("/admin/billing");
+                setSidebarOpen(false);
+              }}
             >
               <span className="admin-nav-icon">
                 ₹
@@ -312,9 +536,10 @@ function AdminLayout() {
                     : ""
                 }`
               }
-              onClick={() =>
-                navigate("/admin/reservations")
-              }
+              onClick={() => {
+                navigate("/admin/reservations");
+                setSidebarOpen(false);
+              }}
             >
               <span className="admin-nav-icon">
                 ◌
@@ -334,9 +559,10 @@ function AdminLayout() {
                     : ""
                 }`
               }
-              onClick={() =>
-                navigate("/admin/employees")
-              }
+              onClick={() => {
+                navigate("/admin/employees");
+                setSidebarOpen(false);
+              }}
             >
               <span className="admin-nav-icon">
                 👥
@@ -369,9 +595,10 @@ function AdminLayout() {
                     : ""
                 }`
               }
-              onClick={() =>
-                navigate("/admin/menu")
-              }
+              onClick={() => {
+                navigate("/admin/menu");
+                setSidebarOpen(false);
+              }}
             >
               <span className="admin-nav-icon">
                 🍽
@@ -391,9 +618,10 @@ function AdminLayout() {
                     : ""
                 }`
               }
-              onClick={() =>
-                navigate("/admin/settings")
-              }
+              onClick={() => {
+                navigate("/admin/settings");
+                setSidebarOpen(false);
+              }}
             >
               <span className="admin-nav-icon">
                 ⚙
@@ -405,6 +633,17 @@ function AdminLayout() {
           </nav>
 
         </aside>
+
+        {/* =================================================
+            MOBILE OVERLAY
+        ================================================= */}
+
+        <div
+          className={`admin-sidebar-overlay ${
+            sidebarOpen ? "open" : ""
+          }`}
+          onClick={() => setSidebarOpen(false)}
+        />
 
         {/* =================================================
             PAGE CONTENT
